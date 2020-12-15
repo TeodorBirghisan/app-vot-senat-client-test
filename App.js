@@ -1,13 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import LoginInput from './screen/Login';
+import Login from './screen/Login';
+import Signup from './screen/Signup';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <LoginInput />
+      <Signup />
     </View>
   );
 }
