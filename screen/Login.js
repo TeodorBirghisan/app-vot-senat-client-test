@@ -9,8 +9,8 @@ import {
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import InputField from '../components/InputField';
-import PasswordField from '../components/PasswordField';
+import InputField from '../components/InputComponent/InputField';
+import PasswordField from '../components/InputComponent/PasswordField';
 
 const LoginInput = (props) => {
   return (
