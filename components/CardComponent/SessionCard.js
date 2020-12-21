@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { Card, Button, Icon } from 'react-native-elements';
+import { StyleSheet, View, Text, Button } from 'react-native';
+import { Card } from 'react-native-elements';
 
 const SessionCard = (props) => {
   return (
@@ -11,20 +11,18 @@ const SessionCard = (props) => {
         Display the live Session if there is any Or display not current Live
         Session
       </Text>
-      <Button
-        icon={<Icon name='code' color='#ffffff' />}
-        buttonStyle={{
-          borderRadius: 0,
-          marginLeft: 0,
-          marginRight: 0,
-          marginBottom: 0
-        }}
-        title='VOTE NOW'
-      />
+      <Button style={styles.buttonStyle} title='VOTE NOW' />
     </Card>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  buttonStyle: {
+    borderRadius: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    marginBottom: 0
+  }
+});
 
 export default SessionCard;
