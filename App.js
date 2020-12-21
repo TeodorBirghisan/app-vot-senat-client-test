@@ -1,16 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
 
-import Login from './screen/Login';
-import Signup from './screen/Signup';
-import MainScreen from './screen/MainScreen';
-import SessionScreen from './screen/SessionScreen';
 import MyStack from './Test';
 
+import NavigationLogic from './screen/Navigation';
+
 export default function App() {
-  return <SessionScreen />;
+  return <NavigationLogic />;
 }
 
 const styles = StyleSheet.create({
