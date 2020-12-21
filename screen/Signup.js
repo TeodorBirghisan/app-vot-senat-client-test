@@ -43,7 +43,7 @@ const Signup = (props) => {
 const styles = StyleSheet.create({
   signupContainer: {
     flex: 1,
-    width: '75%',
+    //width: '75%',
     alignContent: 'center',
     justifyContent: 'center'
   }

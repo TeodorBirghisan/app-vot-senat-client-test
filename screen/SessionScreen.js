@@ -20,4 +20,6 @@ const SessionScreen = (props) => {
   );
 };
 
+const styles = StyleSheet.create({});
+
 export default SessionScreen;

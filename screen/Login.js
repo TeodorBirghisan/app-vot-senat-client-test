@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Button,
   Text,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Keyboard
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -28,7 +29,7 @@ const LoginInput = (props) => {
           }
         />
         <Text style={styles.text}>Password</Text>
-        <PasswordField />
+        <PasswordField placeholder='password' />
         <Button title='Login' style={styles.button} />
       </View>
     </TouchableWithoutFeedback>
@@ -38,8 +39,6 @@ const LoginInput = (props) => {
 const styles = StyleSheet.create({
   input: {
     flex: 1,
-    width: '75%',
-    maxWidth: '80%',
     alignContent: 'center',
     justifyContent: 'center'
   },
