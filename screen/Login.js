@@ -7,13 +7,14 @@ import {
   TouchableWithoutFeedback,
   Keyboard
 } from 'react-native';
-
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import InputField from '../components/InputComponent/InputField';
 import PasswordField from '../components/InputComponent/PasswordField';
 
 const LoginInput = (props) => {
+  const navigation = useNavigation();
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -30,7 +31,11 @@ const LoginInput = (props) => {
         />
         <Text style={styles.text}>Password</Text>
         <PasswordField placeholder='password' />
-        <Button title='Login' style={styles.button} />
+        <Button
+          title='Login'
+          style={styles.button}
+          onPress={() => navigation.navigate('MainScreen')}
+        />
       </View>
     </TouchableWithoutFeedback>
   );
