@@ -17,7 +17,7 @@ const SessionCard = (props) => {
       <Button
         style={styles.buttonStyle}
         title='VOTE NOW'
-        onPress={() => navigation.navigate('SessionScreen')}
+        onPress={() => navigation.navigate('Session')}
       />
     </Card>
   );
