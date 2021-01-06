@@ -1,20 +1,51 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
   Button,
   Text,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  Alert
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
 import InputField from '../components/InputComponent/InputField';
 import PasswordField from '../components/InputComponent/PasswordField';
+import { postLogin } from '../endpoints/Endpoints';
 
 const LoginInput = (props) => {
   const navigation = useNavigation();
+  const [emailAddress, setEmailAddress] = useState('');
+  const [password, setPassword] = useState('');
+  const postData = { email: emailAddress, password: password };
+
+  const login = () => {
+    postLogin(postData).then((response) => {
+      if (response.success === true) {
+        navigation.navigate('MainScreen');
+        //TODO: sa salvez Tokenu
+        //TODO: Welcome user asta sa fie in main screen in Header...
+      } else {
+        Alert.alert(
+          response.message,
+          'Please enter login credentials again',
+          [
+            {
+              text: 'Cancel',
+              style: 'cancel'
+            },
+            {
+              text: 'OK'
+            }
+          ],
+          { cancelable: false }
+        );
+        //TODO: setFIELDUGRESIT('');
+        console.log(response.message);
+      }
+    });
+  };
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -25,16 +56,24 @@ const LoginInput = (props) => {
         <Text style={styles.text}>Email Address</Text>
         <InputField
           placeholder='email@address.com'
+          value={emailAddress}
+          onChangeText={setEmailAddress}
           leftIcon={
             <Icon type='font-awesome' name='envelope' size={24} color='black' />
           }
         />
         <Text style={styles.text}>Password</Text>
-        <PasswordField placeholder='password' />
+        <PasswordField
+          placeholder='password'
+          value={password}
+          onChangeText={setPassword}
+        />
         <Button
           title='Login'
           style={styles.button}
-          onPress={() => navigation.navigate('MainScreen')}
+          onPress={() => {
+            login();
+          }}
         />
       </View>
     </TouchableWithoutFeedback>
