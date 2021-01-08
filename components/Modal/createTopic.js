@@ -28,6 +28,7 @@ const CreateTopic = (props) => {
       ...topicList,
       { id: Math.random().toString(), value: topic }
     ]);
+    setEnteredTopic('');
   };
   return (
     <View>
@@ -99,8 +100,8 @@ const styles = StyleSheet.create({
   },
   modalView: {
     //margin: 20,
-    width: '85%',
-    height: '85%',
+    width: '90%',
+    height: '90%',
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,

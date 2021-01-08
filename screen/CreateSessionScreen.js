@@ -37,6 +37,19 @@ const CreateSessionScreen = (props) => {
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
+  const [title, setTitle] = useState('');
+  const [duration, setDuration] = useState('');
+  const [session, setSession] = useState({
+    title: 'default title',
+    programmed_for: 'dd/mm/yyyy hh:mm',
+    duration: 'min/hrs'
+  });
+
+  const onCreateSession = () => {
+    setSession({ title: title, programmed_for: date, duration: duration });
+    setDuration('');
+    setTitle('');
+  };
 
   const onChange = (event, selectedDate) => {
     try {
@@ -68,7 +81,11 @@ const CreateSessionScreen = (props) => {
       }}
     >
       <View style={styles.createSessionContainer}>
-        <InputField placeholder='Title for session' />
+        <InputField
+          placeholder='Title for session'
+          value={title}
+          onChangeText={setTitle}
+        />
         <View>
           <Button onPress={showDatepicker} title='Show date picker!' />
         </View>
@@ -85,12 +102,18 @@ const CreateSessionScreen = (props) => {
             onChange={onChange}
           />
         )}
+        <InputField
+          placeholder='Set duration'
+          value={duration}
+          onChangeText={setDuration}
+        />
         <View style={styles.dateText}>
           <Text style={styles.text}>Selected date: {formateDate(date)}</Text>
         </View>
         <CreateTopic />
         <View>
-          <Button title={'create session'} />
+          <Button title={'create session'} onPress={() => onCreateSession()} />
+          <Button title={'View all'} onPress={() => console.log(session)} />
         </View>
       </View>
     </TouchableWithoutFeedback>
