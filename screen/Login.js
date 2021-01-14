@@ -7,7 +7,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import InputField from '../components/InputComponent/InputField';
