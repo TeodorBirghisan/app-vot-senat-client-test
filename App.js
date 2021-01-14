@@ -3,25 +3,27 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 import Login from './screen/Login';
 import Signup from './screen/Signup';
 import MainScreen from './screen/MainScreen';
 import SessionScreen from './screen/SessionScreen';
 import HeaderContainer from './components/HeaderComponent/Header';
-import CreateSessionScreen from './screen/CreateSessionScreen';
-import SessionDrawer from './components/Drawer/SessionDrawer';
 import SendEmailScreen from './screen/SendEmailScreen';
+import CreateSessionScreen from './screen/CreateSessionScreen';
+import BottomNavigator from './components/Navigator/BottomNavigator';
 
 const Stack = createStackNavigator();
+const BottomTabs = createMaterialBottomTabNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='MainScreen'>
+      <Stack.Navigator initialRouteName='Login'>
         <Stack.Screen name='Login' component={Login} />
-        <Stack.Screen name='MainScreen' component={MainScreen} />
-        <Stack.Screen name='Session' component={SessionDrawer} />
+        <Stack.Screen name='BottomNavigator' component={BottomNavigator} />
+        <Stack.Screen name='Session' component={SessionScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

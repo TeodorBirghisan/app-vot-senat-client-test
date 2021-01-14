@@ -34,7 +34,7 @@ const LoginInput = (props) => {
         <Button
           title='Login'
           style={styles.button}
-          onPress={() => navigation.navigate('MainScreen')}
+          onPress={() => navigation.navigate('BottomNavigator')}
         />
       </View>
     </TouchableWithoutFeedback>
