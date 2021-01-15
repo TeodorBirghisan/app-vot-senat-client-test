@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import InputField from '../components/InputComponent/InputField';
 import PasswordField from '../components/InputComponent/PasswordField';
 import { postLogin } from '../endpoints/Endpoints';
+import { useNavigation } from '@react-navigation/native';
 
 const LoginInput = (props) => {
   const navigation = useNavigation();
