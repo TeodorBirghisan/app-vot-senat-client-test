@@ -19,6 +19,7 @@ import HeaderContainer from './components/HeaderComponent/Header';
 import SendEmailScreen from './screen/SendEmailScreen';
 import CreateSessionScreen from './screen/CreateSessionScreen';
 import BottomNavigator from './components/Navigator/BottomNavigator';
+import SessionDrawer from './components/Drawer/SessionDrawer';
 
 const Stack = createStackNavigator();
 const BottomTabs = createMaterialBottomTabNavigator();
@@ -26,10 +27,10 @@ const BottomTabs = createMaterialBottomTabNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Login'>
+      <Stack.Navigator initialRouteName='BottomNavigator'>
         <Stack.Screen name='Login' component={Login} />
         <Stack.Screen name='BottomNavigator' component={BottomNavigator} />
-        <Stack.Screen name='Session' component={SessionScreen} />
+        <Stack.Screen name='Session' component={SessionDrawer} />
       </Stack.Navigator>
     </NavigationContainer>
   );
