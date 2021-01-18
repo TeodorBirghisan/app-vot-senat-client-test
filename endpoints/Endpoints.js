@@ -37,7 +37,7 @@ async function getAllMeetings() {
   try {
     let response = await fetch(apiGetAllMeetings);
     let json = await response.json();
-    return json;
+    return json.data;
   } catch (error) {
     console.log(error);
   }
