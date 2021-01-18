@@ -12,6 +12,7 @@ import {
 import InputField from '../components/InputComponent/InputField';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import CreateTopic from '../components/Modal/createTopic';
+import { postCreateMeeting } from '../endpoints/Endpoints';
 
 const formateDate = (date) => {
   let hours = date.getHours();
@@ -34,11 +35,12 @@ const formateDate = (date) => {
 };
 
 const CreateSessionScreen = (props) => {
-  const [date, setDate] = useState(new Date(1598051730000));
+  const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState('');
   const [duration, setDuration] = useState('');
+  const postData = { title: title, programmed_for: date, duration: duration };
   const [session, setSession] = useState({
     title: 'default title',
     programmed_for: 'dd/mm/yyyy hh:mm',
@@ -46,7 +48,10 @@ const CreateSessionScreen = (props) => {
   });
 
   const onCreateSession = () => {
-    setSession({ title: title, programmed_for: date, duration: duration });
+    setSession(postData);
+    postCreateMeeting(postData).then((response) => {
+      console.log(response);
+    });
     setDuration('');
     setTitle('');
   };
@@ -55,6 +60,7 @@ const CreateSessionScreen = (props) => {
     try {
       const currentDate = selectedDate || date;
       setDate(currentDate);
+      setShow(false);
     } catch (error) {
       console.log(error);
     }
