@@ -8,9 +8,9 @@ const onVotePressHandler = (votValue, topic) => {
   if (votValue === 'DA') {
     console.log(`s-a votat ${votValue} for ${topic}`);
   } else if (votValue === 'NU') {
-    console.log(`s-a votat ${votValue}`);
+    console.log(`s-a votat ${votValue} for ${topic}`);
   } else {
-    console.log(`s-a votat ${votValue}`);
+    console.log(`s-a votat ${votValue} for ${topic}`);
   }
 };
 
@@ -20,9 +20,11 @@ const VotingCard = (props) => {
   /*useEffect(() => {
     getAllVoteValues().then((response) => {});
   }, []);*/
+
+  //props.topicID -> imi da ID de la un topic
   return (
     <Card>
-      <Card.Title>{props.topicTitle}</Card.Title>
+      <Card.Title>{props.topicResult}</Card.Title>
       <Card.Divider />
       <Text>{props.topicContent}</Text>
       <View style={styles.buttonContainer}>
@@ -30,7 +32,7 @@ const VotingCard = (props) => {
           <Button
             title={'DA'}
             onPress={() => {
-              onVotePressHandler('DA');
+              onVotePressHandler('DA', props.topicContent);
             }}
           />
         </View>
@@ -38,7 +40,7 @@ const VotingCard = (props) => {
           <Button
             title={'MA ABTIN'}
             onPress={() => {
-              onVotePressHandler('MA ABTIN');
+              onVotePressHandler('MA ABTIN', props.topicContent);
             }}
           />
         </View>
@@ -46,7 +48,7 @@ const VotingCard = (props) => {
           <Button
             title={'NU'}
             onPress={() => {
-              onVotePressHandler('NU');
+              onVotePressHandler('NU', props.topicContent);
             }}
           />
         </View>

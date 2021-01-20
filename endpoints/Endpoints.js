@@ -4,6 +4,8 @@ const apiLoginUser = `${HOST}/user/login-admin`;
 const apiCreateMeeting = `${HOST}/meeting/createMeeting`;
 const apiGetAllMeetings = `${HOST}/meeting/all`;
 const apiGetAllVotValues = `${HOST}/votValue/all`;
+const apiAllTopicsInMeetingID = (id) =>
+  `${HOST}/topic/allTopicsInMeeting/${id}`;
 
 async function postLogin(params) {
   try {
@@ -54,4 +56,20 @@ async function getAllVoteValues() {
   }
 }
 
-export { postLogin, postCreateMeeting, getAllMeetings, getAllVoteValues };
+async function getAllTopicsInMeeting(id) {
+  try {
+    let response = await fetch(apiAllTopicsInMeetingID(id));
+    let json = await response.json();
+    return json.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export {
+  postLogin,
+  postCreateMeeting,
+  getAllMeetings,
+  getAllVoteValues,
+  getAllTopicsInMeeting
+};
