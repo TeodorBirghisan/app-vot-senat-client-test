@@ -40,7 +40,11 @@ const CreateSessionScreen = (props) => {
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState('');
   const [duration, setDuration] = useState('');
-  const postData = { title: title, programmed_for: date, duration: duration };
+  const postData = {
+    title: title,
+    programmed_for: date,
+    duration: duration
+  };
   const [session, setSession] = useState({
     title: 'default title',
     programmed_for: 'dd/mm/yyyy hh:mm',
