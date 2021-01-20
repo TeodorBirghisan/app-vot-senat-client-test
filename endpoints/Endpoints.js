@@ -3,6 +3,7 @@ const HOST = 'http://192.168.1.4:8080';
 const apiLoginUser = `${HOST}/user/login-admin`;
 const apiCreateMeeting = `${HOST}/meeting/createMeeting`;
 const apiGetAllMeetings = `${HOST}/meeting/all`;
+const apiGetAllVotValues = `${HOST}/votValue/all`;
 
 async function postLogin(params) {
   try {
@@ -43,4 +44,14 @@ async function getAllMeetings() {
   }
 }
 
-export { postLogin, postCreateMeeting, getAllMeetings };
+async function getAllVoteValues() {
+  try {
+    let response = await fetch(apiGetAllVotValues);
+    let json = await response.json();
+    return json.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export { postLogin, postCreateMeeting, getAllMeetings, getAllVoteValues };
