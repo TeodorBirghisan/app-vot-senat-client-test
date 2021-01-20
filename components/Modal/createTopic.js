@@ -13,6 +13,8 @@ import InputField from '../InputComponent/InputField';
 
 import TopicModel from './topicModel';
 
+import { createTopicForMeeting } from '../../endpoints/Endpoints';
+
 //TODO: The user can also remove the topics if he wants
 //TODO: Add some design ca ma speriu cand vad cum arata
 
@@ -20,6 +22,11 @@ const CreateTopic = (props) => {
   const [enteredTopic, setEnteredTopic] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [topicList, setTopicList] = useState([]);
+  const meetingID = props.meetingID;
+  console.log(meetingID);
+  const postData = {
+    topic: ''
+  };
   const addTopicForList = (topic) => {
     if (topic.length === 0) {
       return;
@@ -30,6 +37,18 @@ const CreateTopic = (props) => {
     ]);
     setEnteredTopic('');
   };
+
+  const addTopicsToMeeting = () => {
+    topicList.forEach((topic) =>
+      createTopicForMeeting(meetingID, { topic: topic.value }).then(
+        (response) => {
+          console.log(response);
+        }
+      )
+    );
+    setTopicList('');
+  };
+
   return (
     <View>
       <Modal
@@ -64,7 +83,7 @@ const CreateTopic = (props) => {
             />
             <Button
               title={'Add these topics for meeting'}
-              onPress={() => console.log(topicList)}
+              onPress={() => addTopicsToMeeting()}
               style={{ ...styles.openButton }}
             />
             <TouchableHighlight
