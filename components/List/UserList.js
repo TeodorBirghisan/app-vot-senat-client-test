@@ -1,36 +1,37 @@
-import React from 'react';
+import { useRoute } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { ListItem, Avatar } from 'react-native-elements';
+import { ListItem, Avatar, Icon } from 'react-native-elements';
+import { FlatList } from 'react-native-gesture-handler';
+import { getAllMembersFromMeeting } from '../../endpoints/Endpoints';
 
-const list = [
-  {
-    name: 'Amy Farha',
-    avatar_url:
-      'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    subtitle: 'Vice President'
-  },
-  {
-    name: 'Chris Jackson',
-    avatar_url:
-      'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-    subtitle: 'Vice Chairman'
-  }
-];
-
-//TODO: Avatar styling
 const UserList = (props) => {
+  const sessionID = useRoute('Users').params.sessionID;
+  const [users, setUsers] = useState();
+  useEffect(() => {
+    getAllMembersFromMeeting(sessionID).then((response) => {
+      setUsers(response);
+    });
+  }, []);
+
+  const keyExtractor = (item, index) => item.id.toString();
+  const renderItem = ({ item }) => (
+    <ListItem bottomDivider>
+      <Icon name='user' type='font-awesome' />
+      <ListItem.Content>
+        <ListItem.Title>{item.username}</ListItem.Title>
+        <ListItem.Subtitle>{item.role}</ListItem.Subtitle>
+      </ListItem.Content>
+      <ListItem.Chevron />
+    </ListItem>
+  );
+
   return (
-    <View>
-      {list.map((l, i) => (
-        <ListItem key={i} bottomDivider>
-          <Avatar source={{ uri: l.avatar_url }} />
-          <ListItem.Content>
-            <ListItem.Title>{l.name}</ListItem.Title>
-            <ListItem.Subtitle>{l.subtitle}</ListItem.Subtitle>
-          </ListItem.Content>
-        </ListItem>
-      ))}
-    </View>
+    <FlatList
+      keyExtractor={keyExtractor}
+      data={users}
+      renderItem={renderItem}
+    />
   );
 };
 

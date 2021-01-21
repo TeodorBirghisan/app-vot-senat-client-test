@@ -17,7 +17,11 @@ const SessionDrawer = (props) => {
   const sessionID = useRoute('Session').params.itemID;
   return (
     <Drawer.Navigator initialRouteName='SessionScreen'>
-      <Drawer.Screen name='Users' component={UserList} />
+      <Drawer.Screen
+        name='Users'
+        component={UserList}
+        initialParams={{ sessionID }}
+      />
       <Drawer.Screen
         name='SessionScreen'
         component={SessionScreen}
