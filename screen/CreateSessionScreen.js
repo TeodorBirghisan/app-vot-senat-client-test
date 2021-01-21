@@ -40,6 +40,7 @@ const CreateSessionScreen = (props) => {
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState('');
   const [duration, setDuration] = useState('');
+  const [meetingID, setMeetingID] = useState();
   const postData = {
     title: title,
     programmed_for: date,
@@ -54,7 +55,7 @@ const CreateSessionScreen = (props) => {
   const onCreateSession = () => {
     setSession(postData);
     postCreateMeeting(postData).then((response) => {
-      console.log(response);
+      setMeetingID(response.data.id);
     });
     setDuration('');
     setTitle('');
@@ -120,7 +121,7 @@ const CreateSessionScreen = (props) => {
         <View style={styles.dateText}>
           <Text style={styles.text}>Selected date: {formateDate(date)}</Text>
         </View>
-        <CreateTopic />
+        <CreateTopic meetingID={meetingID} />
         <View>
           <Button title={'create session'} onPress={() => onCreateSession()} />
           <Button title={'View all'} onPress={() => console.log(session)} />

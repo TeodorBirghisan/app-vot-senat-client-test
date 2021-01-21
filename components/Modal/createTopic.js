@@ -13,6 +13,8 @@ import InputField from '../InputComponent/InputField';
 
 import TopicModel from './topicModel';
 
+import { createTopicForMeeting } from '../../endpoints/Endpoints';
+
 //TODO: The user can also remove the topics if he wants
 //TODO: Add some design ca ma speriu cand vad cum arata
 
@@ -20,16 +22,41 @@ const CreateTopic = (props) => {
   const [enteredTopic, setEnteredTopic] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [topicList, setTopicList] = useState([]);
+  const meetingID = props.meetingID;
+  const onAddTopicPress = () => {
+    if (meetingID == null) {
+      Alert.alert(
+        'Cannot add Topics',
+        'You must first create a session before adding topics',
+        [{ text: 'OK' /*onPress: () => console.log('OK Pressed')*/ }],
+        { cancelable: false }
+      );
+    } else {
+      setModalVisible(true);
+    }
+  };
   const addTopicForList = (topic) => {
     if (topic.length === 0) {
       return;
     }
     setTopicList([
       ...topicList,
-      { id: Math.random().toString(), value: topic }
+      { id: '_' + Math.random().toString(36).substr(2, 9), value: topic }
     ]);
     setEnteredTopic('');
   };
+
+  const addTopicsToMeeting = () => {
+    topicList.forEach((topic) =>
+      createTopicForMeeting(meetingID, { topic: topic.value }).then(
+        (response) => {
+          console.log(response);
+        }
+      )
+    );
+    setTopicList('');
+  };
+
   return (
     <View>
       <Modal
@@ -64,7 +91,7 @@ const CreateTopic = (props) => {
             />
             <Button
               title={'Add these topics for meeting'}
-              onPress={() => console.log(topicList)}
+              onPress={() => addTopicsToMeeting()}
               style={{ ...styles.openButton }}
             />
             <TouchableHighlight
@@ -82,7 +109,7 @@ const CreateTopic = (props) => {
       <TouchableHighlight
         style={styles.openButton}
         onPress={() => {
-          setModalVisible(true);
+          onAddTopicPress();
         }}
       >
         <Text style={styles.textStyle}>Add topics</Text>
