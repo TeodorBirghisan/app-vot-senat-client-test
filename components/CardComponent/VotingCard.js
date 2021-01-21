@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 
 import { Card, ButtonGroup, Divider } from 'react-native-elements';
 import { getAllVoteValues } from '../../endpoints/Endpoints';
+import Timer from '../Timer/Timer';
 
 const onVotePressHandler = (votValue, topic) => {
   if (votValue === 'DA') {
@@ -27,6 +28,7 @@ const VotingCard = (props) => {
       <Card.Title>{props.topicResult}</Card.Title>
       <Card.Divider />
       <Text>{props.topicContent}</Text>
+      <Timer />
       <View style={styles.buttonContainer}>
         <View style={styles.button}>
           <Button

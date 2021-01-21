@@ -4,6 +4,7 @@ import { View, StyleSheet, ScrollView, FlatList } from 'react-native';
 import VotingCard from '../components/CardComponent/VotingCard';
 import { useRoute } from '@react-navigation/native';
 import { getAllTopicsInMeeting } from '../endpoints/Endpoints';
+import Timer from '../components/Timer/Timer';
 
 //TODO: Add specific topics for VotingCards through props
 //TODO: FlatList cu toate topicurile dintr-un anumit meeting
@@ -19,9 +20,8 @@ const SessionScreen = (props) => {
   //console.log(sessionID);
   const Item = ({ id, result, topic }) => (
     <View>
-      <ScrollView>
-        <VotingCard topicID={id} topicResult={result} topicContent={topic} />
-      </ScrollView>
+      <VotingCard topicID={id} topicResult={result} topicContent={topic} />
+      <Timer />
     </View>
   );
   const renderItem = ({ item }) => (
