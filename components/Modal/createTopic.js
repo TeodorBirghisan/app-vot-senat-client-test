@@ -23,9 +23,17 @@ const CreateTopic = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [topicList, setTopicList] = useState([]);
   const meetingID = props.meetingID;
-  console.log(meetingID);
-  const postData = {
-    topic: ''
+  const onAddTopicPress = () => {
+    if (meetingID == null) {
+      Alert.alert(
+        'Cannot add Topics',
+        'You must first create a session before adding topics',
+        [{ text: 'OK' /*onPress: () => console.log('OK Pressed')*/ }],
+        { cancelable: false }
+      );
+    } else {
+      setModalVisible(true);
+    }
   };
   const addTopicForList = (topic) => {
     if (topic.length === 0) {
@@ -33,7 +41,7 @@ const CreateTopic = (props) => {
     }
     setTopicList([
       ...topicList,
-      { id: Math.random().toString(), value: topic }
+      { id: '_' + Math.random().toString(36).substr(2, 9), value: topic }
     ]);
     setEnteredTopic('');
   };
@@ -101,7 +109,7 @@ const CreateTopic = (props) => {
       <TouchableHighlight
         style={styles.openButton}
         onPress={() => {
-          setModalVisible(true);
+          onAddTopicPress();
         }}
       >
         <Text style={styles.textStyle}>Add topics</Text>
