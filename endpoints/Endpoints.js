@@ -8,6 +8,8 @@ const apiAllTopicsInMeetingID = (id) =>
   `${HOST}/topic/allTopicsInMeeting/${id}`;
 const apiCreateTopicForMeeting = (id) =>
   `${HOST}/topic/createTopicForMeeting/${id}`;
+const apiAllMembersFromMeetingID = (id) =>
+  `${HOST}/meeting/allMembersFromMeeting/${id}`;
 
 async function postLogin(params) {
   try {
@@ -82,11 +84,24 @@ async function createTopicForMeeting(id, topic) {
   }
 }
 
+async function getAllMembersFromMeeting(id) {
+  try {
+    ///De aici pot scoate si meeting participation
+    ///Sa vad cati useri au participat la cate meetinguri
+    let response = await fetch(apiAllMembersFromMeetingID(id));
+    let json = await response.json();
+    return json.data.values;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
   postLogin,
   postCreateMeeting,
   getAllMeetings,
   getAllVoteValues,
   getAllTopicsInMeeting,
-  createTopicForMeeting
+  createTopicForMeeting,
+  getAllMembersFromMeeting
 };
