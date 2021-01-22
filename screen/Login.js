@@ -14,17 +14,21 @@ import InputField from '../components/InputComponent/InputField';
 import PasswordField from '../components/InputComponent/PasswordField';
 import { postLogin } from '../endpoints/Endpoints';
 import { useNavigation } from '@react-navigation/native';
+import * as SecureStore from 'expo-secure-store';
 
 const LoginInput = (props) => {
   const navigation = useNavigation();
   const [emailAddress, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
   const postData = { email: emailAddress, password: password };
-
+  const [token, setToken] = useState();
   const login = () => {
     postLogin(postData).then((response) => {
       if (response.success === true) {
-        navigation.navigate('MainScreen');
+        setToken(response.token);
+        navigation.navigate('BottomNavigator');
+        ///console.log(token);
+        async () => await SecureStore.setItemAsync('token', token);
         //TODO: sa salvez Tokenu
         //TODO: Welcome user asta sa fie in main screen in Header...
       } else {
