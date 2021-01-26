@@ -5,8 +5,7 @@ import VotingCard from '../components/CardComponent/VotingCard';
 import { useRoute } from '@react-navigation/native';
 import { getAllTopicsInMeeting } from '../endpoints/Endpoints';
 
-//TODO: Add specific topics for VotingCards through props
-//TODO: FlatList cu toate topicurile dintr-un anumit meeting
+//TODO: Calculate the result of every topic
 const SessionScreen = (props) => {
   const sessionID = useRoute('SessionScreen').params.sessionID;
   const [topics, setTopics] = useState();

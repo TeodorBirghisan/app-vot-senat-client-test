@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,30 +6,42 @@ import {
   Text,
   TouchableWithoutFeedback,
   Keyboard,
-  Alert
+  Alert,
+  BackHandler
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import InputField from '../components/InputComponent/InputField';
 import PasswordField from '../components/InputComponent/PasswordField';
 import { postLogin } from '../endpoints/Endpoints';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
+import jwt_decode from 'jwt-decode';
+import {
+  getInSecureStore,
+  saveInSecureStore,
+  deleteInSecureStore
+} from '../constants/Functions';
 
 const LoginInput = (props) => {
   const navigation = useNavigation();
   const [emailAddress, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
-  const postData = { email: emailAddress, password: password };
   const [token, setToken] = useState();
+  const [user, setUser] = useState();
+  const postData = { email: emailAddress, password: password };
+
   const login = () => {
+    //TODO: Cand  dau set la username si la token e promise si se face de abia dupa ce dau login, mie imi trebe instant
+    // trebe sa fac useState pt token si user, si doar dupa ce au valori sa le salvez in secure si dupa sa navighez
     postLogin(postData).then((response) => {
       if (response.success === true) {
+        saveInSecureStore(response.username, response.token);
+        setUser(response.username);
         setToken(response.token);
-        navigation.navigate('BottomNavigator');
-        ///console.log(token);
-        async () => await SecureStore.setItemAsync('token', token);
-        //TODO: sa salvez Tokenu
+        navigation.navigate('BottomNavigator', {
+          username: response.username
+        });
         //TODO: Welcome user asta sa fie in main screen in Header...
       } else {
         Alert.alert(
@@ -51,6 +63,32 @@ const LoginInput = (props) => {
       }
     });
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        // Return true to stop default back navigaton
+        // Return false to keep default back navigaton
+        deleteInSecureStore(user);
+        setToken('');
+        setUser('');
+        setEmailAddress('');
+        setPassword('');
+        console.log(`BYeee ${user}`);
+        //Sa pun o alerta sau ceva
+        return false;
+      };
+
+      // Add Event Listener for hardwareBackPress
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () => {
+        // Once the Screen gets blur Remove Event Listener
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+      };
+    }, [])
+  );
+
   return (
     <TouchableWithoutFeedback
       onPress={() => {

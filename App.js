@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useFocusEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -31,14 +31,14 @@ const Stack = createStackNavigator();
 const getUserToken = async () => {
   try {
     const token = await SecureStore.getItemAsync('token');
-    console.log('User Token', token);
+    //console.log('User Token', token);
   } catch (error) {
     console.log(error);
   }
 };
 
 export default function App() {
-  getUserToken();
+  //getUserToken();
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Login'>

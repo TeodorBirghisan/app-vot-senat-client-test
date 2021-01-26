@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
-
+import { useRoute } from '@react-navigation/native';
 import SessionCard from '../components/CardComponent/SessionCard';
-import { getAllMeetings, getAllTopicsInMeeting } from '../endpoints/Endpoints';
+import { getAllMeetings } from '../endpoints/Endpoints';
 
 const MainScreen = (props) => {
   const [meetings, setMeetings] = useState();
@@ -15,6 +15,7 @@ const MainScreen = (props) => {
     <View>
       <SessionCard
         sessionID={id}
+        username={useRoute('MainScreen').params.username}
         title={title}
         programmed_for={`Programmed_for: ${programmed_for}`}
       />

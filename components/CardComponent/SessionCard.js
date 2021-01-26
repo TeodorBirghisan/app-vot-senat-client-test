@@ -3,10 +3,24 @@ import { StyleSheet, View, Text, Button } from 'react-native';
 import { Card } from 'react-native-elements';
 
 import { useNavigation } from '@react-navigation/native';
-import { getAllTopicsInMeeting } from '../../endpoints/Endpoints';
+import { joinMeetingAsUSer } from '../../endpoints/Endpoints';
+import * as SecureStore from 'expo-secure-store';
+import jwt_decode from 'jwt-decode';
+import { getInSecureStore } from '../../constants/Functions';
 
-const SessionCard = (props, { route }) => {
+const SessionCard = (props) => {
   const navigation = useNavigation();
+  const onJoinPressed = async () => {
+    const token = getInSecureStore(props.username);
+    const decodedToken = await jwt_decode((await token).toString());
+    console.log(decodedToken);
+    console.log(`UTILIZATORUL  ${props.username}`);
+    joinMeetingAsUSer(props.sessionID, decodedToken.user_id).then(
+      (response) => {
+        console.log(response);
+      }
+    );
+  };
   return (
     <Card style={styles.cardContainer}>
       <Card.Title>{props.title}</Card.Title>
@@ -21,6 +35,7 @@ const SessionCard = (props, { route }) => {
         title='JOIN'
         onPress={() => {
           navigation.navigate('Session', { itemID: props.sessionID });
+          onJoinPressed();
         }}
       />
     </Card>

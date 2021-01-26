@@ -10,6 +10,8 @@ const apiCreateTopicForMeeting = (id) =>
   `${HOST}/topic/createTopicForMeeting/${id}`;
 const apiAllMembersFromMeetingID = (id) =>
   `${HOST}/meeting/allMembersFromMeeting/${id}`;
+const apiJoinMeetingAsUser = (meetingId, userId) =>
+  `${HOST}/user/joinMeeting/${meetingId}/asUser/${userId}`;
 
 async function postLogin(params) {
   try {
@@ -96,6 +98,20 @@ async function getAllMembersFromMeeting(id) {
   }
 }
 
+async function joinMeetingAsUSer(meetingId, userId) {
+  try {
+    let response = await fetch(apiJoinMeetingAsUser(meetingId, userId), {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json; charset=UTF-8' }
+      ///body: JSON.stringify(topic)
+    });
+    let json = await response.json();
+    return json.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
   postLogin,
   postCreateMeeting,
@@ -103,5 +119,6 @@ export {
   getAllVoteValues,
   getAllTopicsInMeeting,
   createTopicForMeeting,
-  getAllMembersFromMeeting
+  getAllMembersFromMeeting,
+  joinMeetingAsUSer
 };
