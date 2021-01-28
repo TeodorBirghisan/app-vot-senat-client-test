@@ -4,7 +4,6 @@ import { Card } from 'react-native-elements';
 
 import { useNavigation } from '@react-navigation/native';
 import { joinMeetingAsUSer } from '../../endpoints/Endpoints';
-import * as SecureStore from 'expo-secure-store';
 import jwt_decode from 'jwt-decode';
 import { getInSecureStore } from '../../constants/Functions';
 
@@ -13,8 +12,8 @@ const SessionCard = (props) => {
   const onJoinPressed = async () => {
     const token = getInSecureStore(props.username);
     const decodedToken = await jwt_decode((await token).toString());
-    console.log(decodedToken);
-    console.log(`UTILIZATORUL  ${props.username}`);
+    //console.log(decodedToken);
+    //console.log(`UTILIZATORUL  ${props.username}`);
     joinMeetingAsUSer(props.sessionID, decodedToken.user_id).then(
       (response) => {
         console.log(response);
@@ -34,7 +33,10 @@ const SessionCard = (props) => {
         style={styles.buttonStyle}
         title='JOIN'
         onPress={() => {
-          navigation.navigate('Session', { itemID: props.sessionID });
+          navigation.navigate('Session', {
+            itemID: props.sessionID,
+            username: props.username
+          });
           onJoinPressed();
         }}
       />

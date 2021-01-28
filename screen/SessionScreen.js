@@ -8,6 +8,7 @@ import { getAllTopicsInMeeting } from '../endpoints/Endpoints';
 //TODO: Calculate the result of every topic
 const SessionScreen = (props) => {
   const sessionID = useRoute('SessionScreen').params.sessionID;
+  const username = useRoute('SessionScreen').params.username;
   const [topics, setTopics] = useState();
   useEffect(() => {
     getAllTopicsInMeeting(sessionID).then((response) => {
@@ -19,7 +20,12 @@ const SessionScreen = (props) => {
   const Item = ({ id, result, topic }) => (
     <View>
       <ScrollView>
-        <VotingCard topicID={id} topicResult={result} topicContent={topic} />
+        <VotingCard
+          topicID={id}
+          topicResult={result}
+          topicContent={topic}
+          username={username}
+        />
       </ScrollView>
     </View>
   );
