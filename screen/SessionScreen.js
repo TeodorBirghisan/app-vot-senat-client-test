@@ -5,10 +5,10 @@ import VotingCard from '../components/CardComponent/VotingCard';
 import { useRoute } from '@react-navigation/native';
 import { getAllTopicsInMeeting } from '../endpoints/Endpoints';
 
-//TODO: Add specific topics for VotingCards through props
-//TODO: FlatList cu toate topicurile dintr-un anumit meeting
+//TODO: Calculate the result of every topic
 const SessionScreen = (props) => {
   const sessionID = useRoute('SessionScreen').params.sessionID;
+  const username = useRoute('SessionScreen').params.username;
   const [topics, setTopics] = useState();
   useEffect(() => {
     getAllTopicsInMeeting(sessionID).then((response) => {
@@ -20,7 +20,12 @@ const SessionScreen = (props) => {
   const Item = ({ id, result, topic }) => (
     <View>
       <ScrollView>
-        <VotingCard topicID={id} topicResult={result} topicContent={topic} />
+        <VotingCard
+          topicID={id}
+          topicResult={result}
+          topicContent={topic}
+          username={username}
+        />
       </ScrollView>
     </View>
   );

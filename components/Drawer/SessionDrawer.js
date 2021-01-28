@@ -15,6 +15,7 @@ const Drawer = createDrawerNavigator();
 //TODO: Aici sa fac aflu toate Topicurile
 const SessionDrawer = (props) => {
   const sessionID = useRoute('Session').params.itemID;
+  const username = useRoute('Session').params.username;
   return (
     <Drawer.Navigator initialRouteName='SessionScreen'>
       <Drawer.Screen
@@ -25,7 +26,7 @@ const SessionDrawer = (props) => {
       <Drawer.Screen
         name='SessionScreen'
         component={SessionScreen}
-        initialParams={{ sessionID }}
+        initialParams={{ sessionID, username }}
       />
     </Drawer.Navigator>
   );

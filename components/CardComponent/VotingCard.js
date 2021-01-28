@@ -20,7 +20,8 @@ const VotingCard = (props) => {
   /*useEffect(() => {
     getAllVoteValues().then((response) => {});
   }, []);*/
-
+  //console.log('IN VOTING CARD', props.username);
+  //props.username -> imi da username-ul
   //props.topicID -> imi da ID de la un topic
   return (
     <Card>
