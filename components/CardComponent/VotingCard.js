@@ -9,13 +9,26 @@ import {
 
 import jwt_decode from 'jwt-decode';
 import { getInSecureStore } from '../../constants/Functions';
+import { Alert } from 'react-native';
 
 const voteValueDA = { value: 'da' };
 const voteValueMAABTIN = { value: 'ma abtin' };
 const voteValueNU = { value: 'nu' };
 
+const voteHandler = (userId, meetingId, topicId, voteValue) => {
+  voteAsUserAtMeetingForTopic(userId, meetingId, topicId, voteValue).then(
+    (response) => {
+      if (response.message != null) {
+        Alert.alert(response.message);
+      }
+    }
+  );
+};
+
 ///pot sa pun json de sus si atunci ar fi voteValue.value === 'da'
 ///si in Button sa pun param voteValueDA
+//TODO: sa fac niste functii ca sa nu scriu ca prostu
+//TODO: functie pentru voteAsUserForTopic
 const onVotePressHandler = async (
   username,
   meetingId,
@@ -26,34 +39,16 @@ const onVotePressHandler = async (
   const token = getInSecureStore(username);
   const decodedToken = await jwt_decode((await token).toString());
   if (votValue === 'DA') {
-    voteAsUserAtMeetingForTopic(
-      decodedToken.user_id,
-      meetingId,
-      topicId,
-      voteValueDA
-    ).then((response) => {
-      console.log(response);
-    });
+    voteHandler(decodedToken.user_id, meetingId, topicId, voteValueDA);
+    Alert.alert('Ati votat!', `s-a votat ${votValue} for ${topic}`);
     console.log(`s-a votat ${votValue} for ${topic}`);
   } else if (votValue === 'NU') {
-    voteAsUserAtMeetingForTopic(
-      decodedToken.user_id,
-      meetingId,
-      topicId,
-      voteValueNU
-    ).then((response) => {
-      console.log(response);
-    });
+    voteHandler(decodedToken.user_id, meetingId, topicId, voteValueNU);
+    Alert.alert('Ati votat!', `s-a votat ${votValue} for ${topic}`);
     console.log(`s-a votat ${votValue} for ${topic}`);
   } else {
-    voteAsUserAtMeetingForTopic(
-      decodedToken.user_id,
-      meetingId,
-      topicId,
-      voteValueMAABTIN
-    ).then((response) => {
-      console.log(response);
-    });
+    voteHandler(decodedToken.user_id, meetingId, topicId, voteValueMAABTIN);
+    Alert.alert('Ati votat!', `s-a votat ${votValue} for ${topic}`);
     console.log(`s-a votat ${votValue} for ${topic}`);
   }
 };
