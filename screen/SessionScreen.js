@@ -22,6 +22,7 @@ const SessionScreen = (props) => {
       <ScrollView>
         <VotingCard
           topicID={id}
+          sessionID={sessionID}
           topicResult={result}
           topicContent={topic}
           username={username}

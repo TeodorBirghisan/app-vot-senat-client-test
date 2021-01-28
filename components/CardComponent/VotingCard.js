@@ -2,14 +2,58 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
 import { Card, ButtonGroup, Divider } from 'react-native-elements';
-import { getAllVoteValues } from '../../endpoints/Endpoints';
+import {
+  getAllVoteValues,
+  voteAsUserAtMeetingForTopic
+} from '../../endpoints/Endpoints';
 
-const onVotePressHandler = (votValue, topic) => {
+import jwt_decode from 'jwt-decode';
+import { getInSecureStore } from '../../constants/Functions';
+
+const voteValueDA = { value: 'da' };
+const voteValueMAABTIN = { value: 'ma abtin' };
+const voteValueNU = { value: 'nu' };
+
+///pot sa pun json de sus si atunci ar fi voteValue.value === 'da'
+///si in Button sa pun param voteValueDA
+const onVotePressHandler = async (
+  username,
+  meetingId,
+  topicId,
+  votValue,
+  topic
+) => {
+  const token = getInSecureStore(username);
+  const decodedToken = await jwt_decode((await token).toString());
   if (votValue === 'DA') {
+    voteAsUserAtMeetingForTopic(
+      decodedToken.user_id,
+      meetingId,
+      topicId,
+      voteValueDA
+    ).then((response) => {
+      console.log(response);
+    });
     console.log(`s-a votat ${votValue} for ${topic}`);
   } else if (votValue === 'NU') {
+    voteAsUserAtMeetingForTopic(
+      decodedToken.user_id,
+      meetingId,
+      topicId,
+      voteValueNU
+    ).then((response) => {
+      console.log(response);
+    });
     console.log(`s-a votat ${votValue} for ${topic}`);
   } else {
+    voteAsUserAtMeetingForTopic(
+      decodedToken.user_id,
+      meetingId,
+      topicId,
+      voteValueMAABTIN
+    ).then((response) => {
+      console.log(response);
+    });
     console.log(`s-a votat ${votValue} for ${topic}`);
   }
 };
@@ -17,9 +61,6 @@ const onVotePressHandler = (votValue, topic) => {
 //TODO: add voted ... for topic ....
 /// adaug ca si parametru props.topicContent
 const VotingCard = (props) => {
-  /*useEffect(() => {
-    getAllVoteValues().then((response) => {});
-  }, []);*/
   //console.log('IN VOTING CARD', props.username);
   //props.username -> imi da username-ul
   //props.topicID -> imi da ID de la un topic
@@ -33,7 +74,13 @@ const VotingCard = (props) => {
           <Button
             title={'DA'}
             onPress={() => {
-              onVotePressHandler('DA', props.topicContent);
+              onVotePressHandler(
+                props.username,
+                props.sessionID,
+                props.topicID,
+                'DA',
+                props.topicContent
+              );
             }}
           />
         </View>
@@ -41,7 +88,13 @@ const VotingCard = (props) => {
           <Button
             title={'MA ABTIN'}
             onPress={() => {
-              onVotePressHandler('MA ABTIN', props.topicContent);
+              onVotePressHandler(
+                props.username,
+                props.sessionID,
+                props.topicID,
+                'MA ABTIN',
+                props.topicContent
+              );
             }}
           />
         </View>
@@ -49,7 +102,13 @@ const VotingCard = (props) => {
           <Button
             title={'NU'}
             onPress={() => {
-              onVotePressHandler('NU', props.topicContent);
+              onVotePressHandler(
+                props.username,
+                props.sessionID,
+                props.topicID,
+                'NU',
+                props.topicContent
+              );
             }}
           />
         </View>
