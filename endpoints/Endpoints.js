@@ -12,6 +12,8 @@ const apiAllMembersFromMeetingID = (id) =>
   `${HOST}/meeting/allMembersFromMeeting/${id}`;
 const apiJoinMeetingAsUser = (meetingId, userId) =>
   `${HOST}/user/joinMeeting/${meetingId}/asUser/${userId}`;
+const apiVoteAsUserAtMeetingForTopic = (userId, meetingId, topicId) =>
+  `${HOST}/vote/asUser/${userId}/atMeeting/${meetingId}/forTopic/${topicId}/`;
 
 async function postLogin(params) {
   try {
@@ -112,6 +114,23 @@ async function joinMeetingAsUSer(meetingId, userId) {
   }
 }
 
+async function voteAsUserAtMeetingForTopic(userId, meetingId, topicId, value) {
+  try {
+    let response = await fetch(
+      apiVoteAsUserAtMeetingForTopic(userId, meetingId, topicId),
+      {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json; charset=UTF-8' },
+        body: JSON.stringify(value)
+      }
+    );
+    let json = await response.json();
+    return json.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
   postLogin,
   postCreateMeeting,
@@ -120,5 +139,6 @@ export {
   getAllTopicsInMeeting,
   createTopicForMeeting,
   getAllMembersFromMeeting,
-  joinMeetingAsUSer
+  joinMeetingAsUSer,
+  voteAsUserAtMeetingForTopic
 };

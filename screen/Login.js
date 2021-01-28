@@ -72,8 +72,8 @@ const LoginInput = (props) => {
         deleteInSecureStore(user);
         setToken('');
         setUser('');
-        setEmailAddress('');
-        setPassword('');
+        //setEmailAddress('');
+        //setPassword('');
         console.log(`BYeee ${user}`);
         //Sa pun o alerta sau ceva
         return false;
