@@ -4,7 +4,8 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import { Card, ButtonGroup, Divider } from 'react-native-elements';
 import {
   getAllVoteValues,
-  voteAsUserAtMeetingForTopic
+  voteAsUserAtMeetingForTopic,
+  calculateResultForTopic
 } from '../../endpoints/Endpoints';
 
 import jwt_decode from 'jwt-decode';
@@ -36,6 +37,10 @@ const onVotePressHandler = async (
   votValue,
   topic
 ) => {
+  calculateResultForTopic(topicId).then((response) => {
+    console.log('rezultat');
+    console.log(response);
+  });
   const token = getInSecureStore(username);
   const decodedToken = await jwt_decode((await token).toString());
   if (votValue === 'DA') {
@@ -53,12 +58,7 @@ const onVotePressHandler = async (
   }
 };
 
-//TODO: add voted ... for topic ....
-/// adaug ca si parametru props.topicContent
 const VotingCard = (props) => {
-  //console.log('IN VOTING CARD', props.username);
-  //props.username -> imi da username-ul
-  //props.topicID -> imi da ID de la un topic
   return (
     <Card>
       <Card.Title>{props.topicResult}</Card.Title>
