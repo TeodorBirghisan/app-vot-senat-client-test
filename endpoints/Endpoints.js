@@ -1,6 +1,9 @@
 const HOST = 'http://192.168.1.4:8080';
 
-const apiLoginUser = `${HOST}/user/login-admin`;
+const apiLoginAdmin = `${HOST}/user/login-admin`;
+const apiLoginSuperAdmin = `${HOST}/user/login-super-admin`;
+const apiLoginSenator = `${HOST}/user/login-senator`;
+const apiLoginGuest = `${HOST}/user/login-guest`;
 const apiCreateMeeting = `${HOST}/meeting/createMeeting`;
 const apiGetAllMeetings = `${HOST}/meeting/all`;
 const apiGetAllVotValues = `${HOST}/votValue/all`;
@@ -15,9 +18,9 @@ const apiJoinMeetingAsUser = (meetingId, userId) =>
 const apiVoteAsUserAtMeetingForTopic = (userId, meetingId, topicId) =>
   `${HOST}/vote/asUser/${userId}/atMeeting/${meetingId}/forTopic/${topicId}/`;
 
-async function postLogin(params) {
+async function postLoginSuperAdmin(params) {
   try {
-    let response = await fetch(apiLoginUser, {
+    let response = await fetch(apiLoginSuperAdmin, {
       method: 'POST',
       headers: { 'Content-type': 'application/json; charset=UTF-8' },
       body: JSON.stringify(params)
@@ -30,6 +33,50 @@ async function postLogin(params) {
   }
 }
 
+async function postLoginAdmin(params) {
+  try {
+    let response = await fetch(apiLoginAdmin, {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json; charset=UTF-8' },
+      body: JSON.stringify(params)
+    });
+
+    let responseJson = await response.json();
+    return responseJson;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function postLoginSenator(params) {
+  try {
+    let response = await fetch(apiLoginSenator, {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json; charset=UTF-8' },
+      body: JSON.stringify(params)
+    });
+
+    let responseJson = await response.json();
+    return responseJson;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function postLoginGuest(params) {
+  try {
+    let response = await fetch(apiLoginGuest, {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json; charset=UTF-8' },
+      body: JSON.stringify(params)
+    });
+
+    let responseJson = await response.json();
+    return responseJson;
+  } catch (error) {
+    console.log(error);
+  }
+}
 async function postCreateMeeting(params) {
   try {
     let response = await fetch(apiCreateMeeting, {
@@ -132,7 +179,10 @@ async function voteAsUserAtMeetingForTopic(userId, meetingId, topicId, value) {
 }
 
 export {
-  postLogin,
+  postLoginSuperAdmin,
+  postLoginAdmin,
+  postLoginSenator,
+  postLoginGuest,
   postCreateMeeting,
   getAllMeetings,
   getAllVoteValues,

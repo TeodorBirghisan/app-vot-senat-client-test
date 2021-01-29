@@ -13,7 +13,13 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import InputField from '../components/InputComponent/InputField';
 import PasswordField from '../components/InputComponent/PasswordField';
-import { postLogin } from '../endpoints/Endpoints';
+import { CheckBox } from 'react-native-elements';
+import {
+  postLoginAdmin,
+  postLoginSuperAdmin,
+  postLoginSenator,
+  postLoginGuest
+} from '../endpoints/Endpoints';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 import jwt_decode from 'jwt-decode';
@@ -25,16 +31,34 @@ import {
 
 const LoginInput = (props) => {
   const navigation = useNavigation();
+  const [isSuperAdmin, setIsSuperAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isSenator, setIsSenator] = useState(false);
+  ///TODO: Logic for login as guest (Maybe a random numer or a formal signup)
+  ///const [isGuest, setIsGuest] = useState(false);
   const [emailAddress, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
   const [token, setToken] = useState();
   const [user, setUser] = useState();
   const postData = { email: emailAddress, password: password };
 
-  const login = () => {
+  const verifyAccount = () => {
+    if (isSuperAdmin === true) {
+      handleLogin(postLoginSuperAdmin, postData);
+    } else if (isAdmin === true) {
+      handleLogin(postLoginAdmin, postData);
+    } else if (isSenator === true) {
+      handleLogin(postLoginSenator, postData);
+    } else {
+      ///ar trebui sa fie guest
+    }
+  };
+
+  const handleLogin = (postFunction, postData) => {
     //TODO: Cand  dau set la username si la token e promise si se face de abia dupa ce dau login, mie imi trebe instant
     // trebe sa fac useState pt token si user, si doar dupa ce au valori sa le salvez in secure si dupa sa navighez
-    postLogin(postData).then((response) => {
+    // setFunctie are callback ca si second parametru adica sa execute doar dupa ce e setanit
+    postFunction(postData).then((response) => {
       if (response.success === true) {
         saveInSecureStore(response.username, response.token);
         setUser(response.username);
@@ -64,6 +88,39 @@ const LoginInput = (props) => {
     });
   };
 
+  /*const login = () => {
+    //TODO: Cand  dau set la username si la token e promise si se face de abia dupa ce dau login, mie imi trebe instant
+    // trebe sa fac useState pt token si user, si doar dupa ce au valori sa le salvez in secure si dupa sa navighez
+    postLoginAdmin(postData).then((response) => {
+      if (response.success === true) {
+        saveInSecureStore(response.username, response.token);
+        setUser(response.username);
+        setToken(response.token);
+        navigation.navigate('BottomNavigator', {
+          username: response.username
+        });
+        //TODO: Welcome user asta sa fie in main screen in Header...
+      } else {
+        Alert.alert(
+          response.message,
+          'Please enter login credentials again',
+          [
+            {
+              text: 'Cancel',
+              style: 'cancel'
+            },
+            {
+              text: 'OK'
+            }
+          ],
+          { cancelable: false }
+        );
+        //TODO: setFIELDUGRESIT('');
+        console.log(response.message);
+      }
+    });
+  };
+*/
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
@@ -111,11 +168,47 @@ const LoginInput = (props) => {
           value={password}
           onChangeText={setPassword}
         />
+        <CheckBox
+          center
+          title='Super Admin Account'
+          checkedIcon='dot-circle-o'
+          uncheckedIcon='circle-o'
+          onPress={() => {
+            setIsSuperAdmin(true);
+            setIsSenator(false);
+            setIsAdmin(false);
+          }}
+          checked={isSuperAdmin}
+        />
+        <CheckBox
+          center
+          title='Admin Account'
+          checkedIcon='dot-circle-o'
+          uncheckedIcon='circle-o'
+          onPress={() => {
+            setIsAdmin(true);
+            setIsSuperAdmin(false);
+            setIsSenator(false);
+          }}
+          checked={isAdmin}
+        />
+        <CheckBox
+          center
+          title='Senator Account'
+          checkedIcon='dot-circle-o'
+          uncheckedIcon='circle-o'
+          onPress={() => {
+            setIsSenator(true);
+            setIsSuperAdmin(false);
+            setIsAdmin(false);
+          }}
+          checked={isSenator}
+        />
         <Button
           title='Login'
           style={styles.button}
           onPress={() => {
-            login();
+            verifyAccount();
           }}
         />
       </View>
