@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { useRoute } from '@react-navigation/native';
+import { getInSecureStore } from '../../constants/Functions';
+import jwt_decode from 'jwt-decode';
 
 import SendEmailScreen from '../../screen/SendEmailScreen';
 import CreateSessionScreen from '../../screen/CreateSessionScreen';
@@ -9,14 +11,20 @@ import MainScreen from '../../screen/MainScreen';
 
 const BottomTabs = createMaterialBottomTabNavigator();
 
-const BottomNavigator = (props) => {
-  const username = useRoute('BottomNavigator').params.username;
+const testRole = async (username) => {
+  const token = getInSecureStore(username);
+  const decodedToken = await jwt_decode((await token).toString());
+  const role = decodedToken.role;
+  return role;
+};
+
+const AdminScreens = (props) => {
   return (
     <BottomTabs.Navigator>
       <BottomTabs.Screen
         name='MainScreen'
         component={MainScreen}
-        initialParams={{ username: username }}
+        initialParams={{ username: props.username }}
       />
       <BottomTabs.Screen
         name='CreateSessionScreen'
@@ -26,5 +34,77 @@ const BottomNavigator = (props) => {
     </BottomTabs.Navigator>
   );
 };
+
+const SenatorScreens = (props) => {
+  return (
+    <BottomTabs.Navigator>
+      <BottomTabs.Screen
+        name='MainScreen'
+        component={MainScreen}
+        initialParams={{ username: props.username }}
+      />
+    </BottomTabs.Navigator>
+  );
+};
+
+///DA render de prea multe ori
+
+const BottomNavigator = (props) => {
+  const username = useRoute('BottomNavigator').params.username;
+  const [canAccess, setCanAccess] = useState(false);
+  testRole(username).then((result) => {
+    if (result === 'admin') setCanAccess(true);
+    else setCanAccess(false);
+  });
+  return (
+    <BottomTabs.Navigator>
+      {canAccess === true ? (
+        //user is admin
+        ((
+          <BottomTabs.Screen
+            name='MainScreen'
+            component={MainScreen}
+            initialParams={{ username: username }}
+          />
+        ),
+        (
+          <BottomTabs.Screen
+            name='CreateSessionScreen'
+            component={CreateSessionScreen}
+          />
+        ))
+      ) : (
+        <BottomTabs.Screen
+          name='MainScreen'
+          component={MainScreen}
+          initialParams={{ username: username }}
+        />
+      )}
+    </BottomTabs.Navigator>
+  );
+  /*if (canAccess === true) {
+    return <AdminScreens username={username} />;
+  } else {
+    return <SenatorScreens username={username} />;
+  }*/
+};
+
+/*<BottomTabs.Navigator>
+      {canAccess === false ? (
+        // User is not admin
+
+        <BottomTabs.Screen
+          name='MainScreen'
+          component={MainScreen}
+          initialParams={{ username: username }}
+        />
+      ) : (
+        // User is admin
+        <BottomTabs.Screen
+          name='CreateSessionScreen'
+          component={CreateSessionScreen}
+        />
+      )}
+    </BottomTabs.Navigator>*/
 
 export default BottomNavigator;
