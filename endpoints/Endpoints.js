@@ -1,4 +1,4 @@
-const HOST = 'http://192.168.1.4:8080';
+const HOST = 'http://192.168.1.3:8080';
 
 const apiLoginUser = `${HOST}/user/login-admin`;
 const apiCreateMeeting = `${HOST}/meeting/createMeeting`;
@@ -14,9 +14,8 @@ const apiJoinMeetingAsUser = (meetingId, userId) =>
   `${HOST}/user/joinMeeting/${meetingId}/asUser/${userId}`;
 const apiVoteAsUserAtMeetingForTopic = (userId, meetingId, topicId) =>
   `${HOST}/vote/asUser/${userId}/atMeeting/${meetingId}/forTopic/${topicId}/`;
-const apiResultForTopic = (topicId) => {
+const apiResultForTopic = (topicId) =>
   `${HOST}/topic/resultForTopic/${topicId}`;
-};
 
 async function postLogin(params) {
   try {

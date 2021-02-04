@@ -37,9 +37,9 @@ const onVotePressHandler = async (
   votValue,
   topic
 ) => {
+  console.log(topicId, 'topicID');
   calculateResultForTopic(topicId).then((response) => {
-    console.log('rezultat');
-    console.log(response);
+    console.log(response, 'rezultat');
   });
   const token = getInSecureStore(username);
   const decodedToken = await jwt_decode((await token).toString());
@@ -58,6 +58,8 @@ const onVotePressHandler = async (
   }
 };
 
+///TODO: sa dau rerender la Voting Card dupa ce se schimba votu
+//// Sa se schimbe live
 const VotingCard = (props) => {
   return (
     <Card>
