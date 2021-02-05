@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { joinMeetingAsUSer } from '../../endpoints/Endpoints';
 import jwt_decode from 'jwt-decode';
 import { getInSecureStore } from '../../constants/Functions';
+import { Alert } from 'react-native';
 
 const SessionCard = (props) => {
   const navigation = useNavigation();
@@ -17,6 +18,39 @@ const SessionCard = (props) => {
     joinMeetingAsUSer(props.sessionID, decodedToken.user_id).then(
       (response) => {
         console.log(response);
+        if (response.success === true) {
+          Alert.alert(
+            'Welcome to this Session',
+            `${response.message}     Vote Carefully`,
+            [
+              {
+                text: 'OK',
+                onPress: () => {
+                  navigation.navigate('Session', {
+                    itemID: props.sessionID,
+                    username: props.username
+                  });
+                }
+              }
+            ]
+          );
+        } else if (response.success === false) {
+          Alert.alert(
+            'Oooops!',
+            response.message,
+            [
+              {
+                text: 'Cancel',
+                onPress: () => {
+                  console.log('Cancel Pressed');
+                },
+                style: 'cancel'
+              },
+              { text: 'OK', onPress: () => console.log('OK Pressed') }
+            ],
+            { cancelable: false }
+          );
+        }
       }
     );
   };
@@ -33,10 +67,6 @@ const SessionCard = (props) => {
         style={styles.buttonStyle}
         title='JOIN'
         onPress={() => {
-          navigation.navigate('Session', {
-            itemID: props.sessionID,
-            username: props.username
-          });
           onJoinPressed();
         }}
       />
