@@ -56,8 +56,14 @@ const BottomNavigator = (props) => {
     if (result === 'admin') setCanAccess(true);
     else setCanAccess(false);
   });
-  return (
-    <BottomTabs.Navigator>
+  if (canAccess === true) {
+    return <AdminScreens username={username} />;
+  } else {
+    return <SenatorScreens username={username} />;
+  }
+};
+/*
+<BottomTabs.Navigator>
       {canAccess === true ? (
         //user is admin
         ((
@@ -81,30 +87,6 @@ const BottomNavigator = (props) => {
         />
       )}
     </BottomTabs.Navigator>
-  );
-  /*if (canAccess === true) {
-    return <AdminScreens username={username} />;
-  } else {
-    return <SenatorScreens username={username} />;
-  }*/
-};
-
-/*<BottomTabs.Navigator>
-      {canAccess === false ? (
-        // User is not admin
-
-        <BottomTabs.Screen
-          name='MainScreen'
-          component={MainScreen}
-          initialParams={{ username: username }}
-        />
-      ) : (
-        // User is admin
-        <BottomTabs.Screen
-          name='CreateSessionScreen'
-          component={CreateSessionScreen}
-        />
-      )}
-    </BottomTabs.Navigator>*/
+*/
 
 export default BottomNavigator;

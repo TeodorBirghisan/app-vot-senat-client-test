@@ -5,7 +5,7 @@ import SessionCard from '../components/CardComponent/SessionCard';
 import { getAllMeetings } from '../endpoints/Endpoints';
 
 const MainScreen = (props) => {
-  console.log('WELCOME', useRoute('MainScreen').params.username);
+  //console.log('WELCOME', useRoute('MainScreen').params.username);
   const [meetings, setMeetings] = useState();
   useEffect(() => {
     getAllMeetings().then((response) => {
