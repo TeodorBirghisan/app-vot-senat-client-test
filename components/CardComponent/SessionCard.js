@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
-import { Card } from 'react-native-elements';
-
+import { Card, Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
-import { joinMeetingAsUSer } from '../../endpoints/Endpoints';
+import { joinMeetingAsUSer, deleteAMeeting } from '../../endpoints/Endpoints';
 import jwt_decode from 'jwt-decode';
 import { getInSecureStore } from '../../constants/Functions';
+import { Alert } from 'react-native';
 
 const SessionCard = (props) => {
   const navigation = useNavigation();
@@ -20,8 +20,33 @@ const SessionCard = (props) => {
       }
     );
   };
+  const onDeletePressed = () => {
+    Alert.alert(
+      `Delete Meeting ${props.title}`,
+      'Are you sure you want to delete this meeting?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'OK',
+          onPress: () => {
+            deleteAMeeting(props.sessionID).then((response) => {
+              console.log(response);
+            });
+          }
+        }
+      ],
+      { cancelable: false }
+    );
+  };
   return (
     <Card style={styles.cardContainer}>
+      <Icon
+        raised
+        name='trash'
+        type='font-awesome'
+        color='#f50'
+        onPress={() => onDeletePressed()}
+      />
       <Card.Title>{props.title}</Card.Title>
       <Card.Divider />
       <Text style={{ marginBottom: 10 }}>
