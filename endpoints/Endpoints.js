@@ -159,7 +159,7 @@ async function joinMeetingAsUSer(meetingId, userId) {
       ///body: JSON.stringify(topic)
     });
     let json = await response.json();
-    return json.data;
+    return json;
   } catch (error) {
     console.log(error);
   }
