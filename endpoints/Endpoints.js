@@ -20,6 +20,8 @@ const apiVoteAsUserAtMeetingForTopic = (userId, meetingId, topicId) =>
 const apiResultForTopic = (topicId) =>
   `${HOST}/topic/resultForTopic/${topicId}`;
 
+const apiDeleteAMeeting = (meetingId) => `${HOST}/meeting/delete/${meetingId}`;
+
 async function postLoginSuperAdmin(params) {
   try {
     let response = await fetch(apiLoginSuperAdmin, {
@@ -193,6 +195,19 @@ async function calculateResultForTopic(topicId) {
   }
 }
 
+async function deleteAMeeting(meetingId) {
+  try {
+    let response = await fetch(apiDeleteAMeeting(meetingId), {
+      method: 'DELETE',
+      headers: { 'Content-type': 'application/json; charset=UTF-8' }
+    });
+    let json = await response.json();
+    return json.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
   postLoginSuperAdmin,
   postLoginAdmin,
@@ -206,5 +221,6 @@ export {
   getAllMembersFromMeeting,
   joinMeetingAsUSer,
   voteAsUserAtMeetingForTopic,
-  calculateResultForTopic
+  calculateResultForTopic,
+  deleteAMeeting
 };
