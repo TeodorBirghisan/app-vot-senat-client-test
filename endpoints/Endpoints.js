@@ -81,11 +81,15 @@ async function postLoginGuest(params) {
     console.log(error);
   }
 }
-async function postCreateMeeting(params) {
+async function postCreateMeeting(params, token) {
   try {
+    console.log(token);
     let response = await fetch(apiCreateMeeting, {
       method: 'POST',
-      headers: { 'Content-type': 'application/json; charset=UTF-8' },
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+        Authorization: token
+      },
       body: JSON.stringify(params)
     });
     let responseJson = await response.json();
@@ -125,11 +129,14 @@ async function getAllTopicsInMeeting(id) {
   }
 }
 
-async function createTopicForMeeting(id, topic) {
+async function createTopicForMeeting(id, topic, token) {
   try {
     let response = await fetch(apiCreateTopicForMeeting(id), {
       method: 'POST',
-      headers: { 'Content-type': 'application/json; charset=UTF-8' },
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+        Authorization: token
+      },
       body: JSON.stringify(topic)
     });
     let json = response.json();
@@ -151,11 +158,14 @@ async function getAllMembersFromMeeting(id) {
   }
 }
 
-async function joinMeetingAsUSer(meetingId, userId) {
+async function joinMeetingAsUSer(meetingId, userId, token) {
   try {
     let response = await fetch(apiJoinMeetingAsUser(meetingId, userId), {
       method: 'POST',
-      headers: { 'Content-type': 'application/json; charset=UTF-8' }
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+        Authorization: token
+      }
       ///body: JSON.stringify(topic)
     });
     let json = await response.json();
@@ -165,13 +175,22 @@ async function joinMeetingAsUSer(meetingId, userId) {
   }
 }
 
-async function voteAsUserAtMeetingForTopic(userId, meetingId, topicId, value) {
+async function voteAsUserAtMeetingForTopic(
+  userId,
+  meetingId,
+  topicId,
+  value,
+  token
+) {
   try {
     let response = await fetch(
       apiVoteAsUserAtMeetingForTopic(userId, meetingId, topicId),
       {
         method: 'POST',
-        headers: { 'Content-type': 'application/json; charset=UTF-8' },
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+          Authorization: token
+        },
         body: JSON.stringify(value)
       }
     );
@@ -195,11 +214,14 @@ async function calculateResultForTopic(topicId) {
   }
 }
 
-async function deleteAMeeting(meetingId) {
+async function deleteAMeeting(meetingId, token) {
   try {
     let response = await fetch(apiDeleteAMeeting(meetingId), {
       method: 'DELETE',
-      headers: { 'Content-type': 'application/json; charset=UTF-8' }
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+        Authorization: token
+      }
     });
     let json = await response.json();
     return json.data;

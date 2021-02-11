@@ -13,6 +13,8 @@ import InputField from '../components/InputComponent/InputField';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import CreateTopic from '../components/Modal/createTopic';
 import { postCreateMeeting } from '../endpoints/Endpoints';
+import { useRoute } from '@react-navigation/native';
+import { getInSecureStore } from '../constants/Functions';
 
 const formateDate = (date) => {
   let hours = date.getHours();
@@ -35,6 +37,7 @@ const formateDate = (date) => {
 };
 
 const CreateSessionScreen = (props) => {
+  const user = useRoute('MainScreen').params.username;
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
@@ -52,9 +55,10 @@ const CreateSessionScreen = (props) => {
     duration: 'min/hrs'
   });
 
-  const onCreateSession = () => {
+  const onCreateSession = async () => {
+    const token = await getInSecureStore(user);
     setSession(postData);
-    postCreateMeeting(postData).then((response) => {
+    postCreateMeeting(postData, token).then((response) => {
       setMeetingID(response.data.id);
     });
     setDuration('');
@@ -121,7 +125,7 @@ const CreateSessionScreen = (props) => {
         <View style={styles.dateText}>
           <Text style={styles.text}>Selected date: {formateDate(date)}</Text>
         </View>
-        <CreateTopic meetingID={meetingID} />
+        <CreateTopic meetingID={meetingID} user={user} />
         <View>
           <Button title={'create session'} onPress={() => onCreateSession()} />
           <Button title={'View all'} onPress={() => console.log(session)} />

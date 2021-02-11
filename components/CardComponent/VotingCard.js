@@ -16,14 +16,18 @@ const voteValueDA = { value: 'da' };
 const voteValueMAABTIN = { value: 'ma abtin' };
 const voteValueNU = { value: 'nu' };
 
-const voteHandler = (userId, meetingId, topicId, voteValue) => {
-  voteAsUserAtMeetingForTopic(userId, meetingId, topicId, voteValue).then(
-    (response) => {
-      if (response.message != null) {
-        Alert.alert(response.message);
-      }
+const voteHandler = (userId, meetingId, topicId, voteValue, token) => {
+  voteAsUserAtMeetingForTopic(
+    userId,
+    meetingId,
+    topicId,
+    voteValue,
+    token
+  ).then((response) => {
+    if (response.message != null) {
+      Alert.alert(response.message);
     }
-  );
+  });
 };
 
 ///pot sa pun json de sus si atunci ar fi voteValue.value === 'da'
@@ -41,18 +45,24 @@ const onVotePressHandler = async (
   calculateResultForTopic(topicId).then((response) => {
     console.log(response, 'rezultat');
   });
-  const token = getInSecureStore(username);
-  const decodedToken = await jwt_decode((await token).toString());
+  const token = await getInSecureStore(username);
+  const decodedToken = await jwt_decode(token);
   if (votValue === 'DA') {
-    voteHandler(decodedToken.user_id, meetingId, topicId, voteValueDA);
+    voteHandler(decodedToken.user_id, meetingId, topicId, voteValueDA, token);
     Alert.alert('Ati votat!', `s-a votat ${votValue} for ${topic}`);
     console.log(`s-a votat ${votValue} for ${topic}`);
   } else if (votValue === 'NU') {
-    voteHandler(decodedToken.user_id, meetingId, topicId, voteValueNU);
+    voteHandler(decodedToken.user_id, meetingId, topicId, voteValueNU, token);
     Alert.alert('Ati votat!', `s-a votat ${votValue} for ${topic}`);
     console.log(`s-a votat ${votValue} for ${topic}`);
   } else {
-    voteHandler(decodedToken.user_id, meetingId, topicId, voteValueMAABTIN);
+    voteHandler(
+      decodedToken.user_id,
+      meetingId,
+      topicId,
+      voteValueMAABTIN,
+      token
+    );
     Alert.alert('Ati votat!', `s-a votat ${votValue} for ${topic}`);
     console.log(`s-a votat ${votValue} for ${topic}`);
   }
