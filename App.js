@@ -16,7 +16,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 import Login from './screen/Login';
-import Signup from './screen/Signup';
+import Signup from './screen/SignUp/Signup';
 import MainScreen from './screen/MainScreen';
 import SessionScreen from './screen/SessionScreen';
 import HeaderContainer from './components/HeaderComponent/Header';
@@ -42,6 +42,11 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Login'>
+        <Stack.Screen
+          name='SignUp'
+          component={Signup}
+          initialParams={{ role: 'admin' }}
+        />
         <Stack.Screen name='Login' component={Login} />
         <Stack.Screen name='BottomNavigator' component={BottomNavigator} />
         <Stack.Screen name='Session' component={SessionDrawer} />

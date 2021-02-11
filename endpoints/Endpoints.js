@@ -19,8 +19,11 @@ const apiVoteAsUserAtMeetingForTopic = (userId, meetingId, topicId) =>
   `${HOST}/vote/asUser/${userId}/atMeeting/${meetingId}/forTopic/${topicId}/`;
 const apiResultForTopic = (topicId) =>
   `${HOST}/topic/resultForTopic/${topicId}`;
-
 const apiDeleteAMeeting = (meetingId) => `${HOST}/meeting/delete/${meetingId}`;
+const apiRegisterSenator = `${HOST}/user/register-senator`;
+const apiRegisterAdmin = `${HOST}/user/register-admin`;
+const apiRegisterSuperAdmin = `${HOST}/user/register-super-admin`;
+const apiRegisterGuest = `${HOST}/user/register-guest`;
 
 async function postLoginSuperAdmin(params) {
   try {
@@ -208,6 +211,48 @@ async function deleteAMeeting(meetingId) {
   }
 }
 
+async function registerSenator(params) {
+  try {
+    let response = await fetch(apiRegisterSenator, {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json; charset=UTF-8' },
+      body: JSON.stringify(params)
+    });
+    let responseJson = await response.json();
+    return responseJson;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function registerAdmin(params) {
+  try {
+    let response = await fetch(apiRegisterAdmin, {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json; charset=UTF-8' },
+      body: JSON.stringify(params)
+    });
+    let responseJson = await response.json();
+    return responseJson;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function registerSuperAdmin(params) {
+  try {
+    let response = await fetch(apiRegisterSuperAdmin, {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json; charset=UTF-8' },
+      body: JSON.stringify(params)
+    });
+    let responseJson = await response.json();
+    return responseJson;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
   postLoginSuperAdmin,
   postLoginAdmin,
@@ -222,5 +267,8 @@ export {
   joinMeetingAsUSer,
   voteAsUserAtMeetingForTopic,
   calculateResultForTopic,
-  deleteAMeeting
+  deleteAMeeting,
+  registerAdmin,
+  registerSenator,
+  registerSuperAdmin
 };
