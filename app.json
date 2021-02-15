@@ -1,5 +1,6 @@
 {
   "expo": {
+    "scheme":"exp",
     "name": "app-vot-senat-client",
     "slug": "app-vot-senat-client",
     "version": "1.0.0",

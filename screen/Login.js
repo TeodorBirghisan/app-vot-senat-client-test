@@ -20,7 +20,11 @@ import {
   postLoginSenator,
   postLoginGuest
 } from '../endpoints/Endpoints';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute
+} from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 import jwt_decode from 'jwt-decode';
 import {

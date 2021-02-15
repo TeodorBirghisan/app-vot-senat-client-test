@@ -8,11 +8,13 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
+import * as Linking from 'expo-linking';
 
 import InputField from '../components/InputComponent/InputField';
 import PasswordField from '../components/InputComponent/PasswordField';
 
 const Signup = (props) => {
+  //Linking.makeUrl('SignUp');
   return (
     <TouchableWithoutFeedback
       onPress={() => {
