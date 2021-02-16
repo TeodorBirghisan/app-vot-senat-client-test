@@ -10,11 +10,13 @@ import { Alert } from 'react-native';
 const SessionCard = (props) => {
   const navigation = useNavigation();
   const onJoinPressed = async () => {
-    const token = getInSecureStore(props.username);
-    const decodedToken = await jwt_decode((await token).toString());
+    const token = await getInSecureStore(props.username);
+    const decodedToken = await jwt_decode(token);
     //console.log(decodedToken);
     //console.log(`UTILIZATORUL  ${props.username}`);
-    joinMeetingAsUSer(props.sessionID, decodedToken.user_id).then(
+    console.log(decodedToken);
+    console.log(token);
+    joinMeetingAsUSer(props.sessionID, decodedToken.user_id, token).then(
       (response) => {
         console.log(response);
         if (response.success === true) {

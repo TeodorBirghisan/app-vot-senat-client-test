@@ -1,6 +1,10 @@
 import React from 'react';
 import * as SecureStore from 'expo-secure-store';
 
+const replaceQuote = (string) => {
+  return string.replace(/['"]+/g, '');
+};
+
 async function saveInSecureStore(key, value) {
   try {
     await SecureStore.setItemAsync(key, JSON.stringify(value));
@@ -16,7 +20,7 @@ const getInSecureStore = async (key) => {
   try {
     const result = await SecureStore.getItemAsync(key);
     console.log(`Successfully got ${key} and ${result}`);
-    return result;
+    return replaceQuote(result);
   } catch (error) {
     console.log(error);
   }

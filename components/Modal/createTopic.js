@@ -14,6 +14,7 @@ import InputField from '../InputComponent/InputField';
 import TopicModel from './topicModel';
 
 import { createTopicForMeeting } from '../../endpoints/Endpoints';
+import { getInSecureStore } from '../../constants/Functions';
 
 //TODO: The user can also remove the topics if he wants
 //TODO: Add some design ca ma speriu cand vad cum arata
@@ -46,9 +47,10 @@ const CreateTopic = (props) => {
     setEnteredTopic('');
   };
 
-  const addTopicsToMeeting = () => {
+  const addTopicsToMeeting = async () => {
+    const token = await getInSecureStore(props.user);
     topicList.forEach((topic) =>
-      createTopicForMeeting(meetingID, { topic: topic.value }).then(
+      createTopicForMeeting(meetingID, { topic: topic.value }, token).then(
         (response) => {
           console.log(response);
         }

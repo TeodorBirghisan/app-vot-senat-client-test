@@ -29,6 +29,7 @@ const AdminScreens = (props) => {
       <BottomTabs.Screen
         name='CreateSessionScreen'
         component={CreateSessionScreen}
+        initialParams={{ username: props.username }}
       />
       <BottomTabs.Screen name='SendEmailScreen' component={SendEmailScreen} />
     </BottomTabs.Navigator>
