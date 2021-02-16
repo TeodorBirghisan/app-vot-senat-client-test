@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useState, useEffect, useFocusEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   View,
   StyleSheet,
@@ -24,7 +24,9 @@ import SendEmailScreen from './screen/SendEmailScreen';
 import CreateSessionScreen from './screen/CreateSessionScreen';
 import BottomNavigator from './components/Navigator/BottomNavigator';
 import SessionDrawer from './components/Drawer/SessionDrawer';
+import RedirectWelcomeScreen from './screen/RedirectWelcomeScreen';
 import * as SecureStore from 'expo-secure-store';
+import * as Linking from 'expo-linking';
 
 const Stack = createStackNavigator();
 
@@ -36,20 +38,60 @@ const getUserToken = async () => {
     console.log(error);
   }
 };
+/*
+const SignUpLinking = () => {};
+
+function urlRedirect(url) {
+  //const navigation = useNavigation();
+  if (!url) return;
+  // parse and redirect to new url
+  let { path } = Linking.parse(url);
+  console.log(
+    `Linked to app with path: ${path} and data:` // ${JSON.stringify(queryParams)}`
+  );
+  return url;
+}*/
+
+/*Linking.addEventListener('url', (event) => {
+    urlRedirect(event.url);
+  });*/
 
 export default function App() {
-  //getUserToken();
+  const [fromExternalPath, setFromExternalPath] = useState(false);
+  const [userRole, setUserRole] = useState('');
+  useEffect(() => {
+    Linking.getInitialURL().then((url) => {
+      console.log(Linking.parse(url));
+      const { path, queryParams } = Linking.parse(url);
+      console.log(queryParams.role);
+      //console.log(path);
+      if (path === null) {
+        setFromExternalPath(false);
+      } else {
+        setFromExternalPath(true);
+        setUserRole(queryParams.role);
+      }
+    });
+  }, []);
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Login'>
+      <Stack.Navigator initialRouteName='RedirectWelcome'>
         <Stack.Screen
-          name='SignUp'
-          component={Signup}
-          initialParams={{ role: 'admin' }}
+          name='RedirectWelcome'
+          component={(navProps) => (
+            <RedirectWelcomeScreen
+              fromExternalPath={fromExternalPath}
+              userRole={userRole}
+              {...navProps}
+            />
+          )}
         />
+        <Stack.Screen name='Email' component={SendEmailScreen} />
         <Stack.Screen name='Login' component={Login} />
         <Stack.Screen name='BottomNavigator' component={BottomNavigator} />
         <Stack.Screen name='Session' component={SessionDrawer} />
+        <Stack.Screen name='SignUp' component={Signup} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -62,3 +104,64 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   }
 });
+
+/*
+
+export default function App() {
+  const [path, setPath] = useState('');
+  const [fromExternalPath, setFromExternalPath] = useState(false);
+  const [userKey, setUserKey] = useState(false);
+  useEffect(() => {
+    Linking.getInitialURL().then((url) => {
+      const { path, userKeyCode } = Linking.parse(url);
+      
+      
+      //console.log(path);
+      if (path === null) {
+        setFromExternalPath(false);
+        
+      } else {
+        setFromExternalPath(true);
+        setUserKey(userKeyCode);
+      }
+    });
+  }, []);
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName='RedirectWelcome'>
+        <Stack.Screen name='SendEmailScreen' component={SendEmailScreen} />
+        <Stack.Screen
+          name='RedirectWelcome'
+          component={(navProps)=><RedirectWelcomeScreen fromExternalPath={fromExternalPath} userKey={userKey} {...navProps} />}
+        />
+        <Stack.Screen name='Login' component={Login} />
+        <Stack.Screen name='BottomNavigator' component={BottomNavigator} />
+        <Stack.Screen name='Session' component={SessionDrawer} />
+        <Stack.Screen name='SignUp' component={Signup} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+
+function RedirectWelcomeScren(props) {
+ 	
+  useEffect(()=>{
+    
+    //fetch de verificare la server sa vezi daca e ok userul sau rolul
+    
+    //navighezi unde vrei
+    
+    if(props.fromExternalPath)
+      	navigator.navigate('SignUp')
+    navigator.navigate('Login')
+  },[props])
+  
+  return (
+    <Spinner/>
+  )
+  
+}
+
+*/

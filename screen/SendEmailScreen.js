@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Button, Alert } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import email from 'react-native-email';
-
+import * as Linking from 'expo-linking';
 import InputField from '../components/InputComponent/InputField';
 
 const handleEmail = (to, subject, body) => {
@@ -28,16 +28,17 @@ const SendEmailScreen = (props) => {
   const verifyAccount = () => {
     if (validateEmail(inputValue) === true) {
       if (isAdmin === true) {
+        console.log(Linking.makeUrl('SignUp?role=admin'));
         handleEmail(
           inputValue,
           'Account Registration',
-          'http://localhost:8080/signupAdmin'
+          Linking.makeUrl('SignUp?role=admin')
         );
       } else if (isSenator === true) {
         handleEmail(
           inputValue,
           'Account Registration',
-          'http://localhost:8080/signupSenator'
+          Linking.makeUrl('SignUp?role=senator')
         );
       }
     } else {
