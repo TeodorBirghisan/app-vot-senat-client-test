@@ -39,4 +39,9 @@ const deleteInSecureStore = async (key) => {
   }
 };
 
-export { saveInSecureStore, getInSecureStore, deleteInSecureStore };
+export {
+  saveInSecureStore,
+  getInSecureStore,
+  deleteInSecureStore,
+  replaceQuote
+};

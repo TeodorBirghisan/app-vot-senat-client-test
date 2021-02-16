@@ -14,8 +14,6 @@ const SessionCard = (props) => {
     const decodedToken = await jwt_decode(token);
     //console.log(decodedToken);
     //console.log(`UTILIZATORUL  ${props.username}`);
-    console.log(decodedToken);
-    console.log(token);
     joinMeetingAsUSer(props.sessionID, decodedToken.user_id, token).then(
       (response) => {
         console.log(response);

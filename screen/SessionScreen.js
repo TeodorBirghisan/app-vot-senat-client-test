@@ -11,10 +11,12 @@ const SessionScreen = (props) => {
   const username = useRoute('SessionScreen').params.username;
   const [topics, setTopics] = useState();
   useEffect(() => {
+    const ac = new AbortController();
     getAllTopicsInMeeting(sessionID).then((response) => {
       //console.log(response);
       setTopics(response);
     });
+    return () => ac.abort();
   }, []);
   //console.log(sessionID);
   const Item = ({ id, result, topic }) => (

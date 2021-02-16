@@ -8,10 +8,13 @@ const MainScreen = (props) => {
   //console.log('WELCOME', useRoute('MainScreen').params.username);
   const [meetings, setMeetings] = useState();
   useEffect(() => {
+    const ac = new AbortController();
     getAllMeetings().then((response) => {
       setMeetings(response);
     });
-  }, []);
+    return () => ac.abort();
+  }, [props]);
+
   const Item = ({ id, title, programmed_for }) => (
     <View>
       <SessionCard
@@ -22,6 +25,7 @@ const MainScreen = (props) => {
       />
     </View>
   );
+
   const renderItem = ({ item }) => (
     <Item
       id={item.id}
@@ -29,6 +33,7 @@ const MainScreen = (props) => {
       programmed_for={item.programmed_for}
     />
   );
+
   return (
     <View>
       <FlatList

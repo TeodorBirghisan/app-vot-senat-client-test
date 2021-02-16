@@ -5,8 +5,6 @@ const RedirectWelcomeScreen = (props) => {
   useEffect(() => {
     //fetch de verificare la server sa vezi daca e ok userul sau rolul
 
-    //navighezi unde vrei
-    console.log(props.userRole);
     if (props.fromExternalPath === true) {
       props.navigation.navigate('SignUp', { role: props.userRole });
     } else {
