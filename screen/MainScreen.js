@@ -6,14 +6,14 @@ import { getAllMeetings } from '../endpoints/Endpoints';
 
 const MainScreen = (props) => {
   //console.log('WELCOME', useRoute('MainScreen').params.username);
-  const [meetings, setMeetings] = useState();
+  const [meetings, setMeetings] = useState({});
   useEffect(() => {
     const ac = new AbortController();
     getAllMeetings().then((response) => {
       setMeetings(response);
     });
     return () => ac.abort();
-  }, [props]);
+  }, []);
 
   const Item = ({ id, title, programmed_for }) => (
     <View>

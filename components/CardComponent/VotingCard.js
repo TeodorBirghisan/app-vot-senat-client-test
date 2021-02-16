@@ -14,6 +14,8 @@ import { Alert } from 'react-native';
 
 ///TODO: sa dau rerender la Voting Card dupa ce se schimba votu
 //// Sa se schimbe live
+
+////setRezultat pt topic il savez in use state si fac fetch in useMemo si se schimba mereu cand bag un voteValue
 const VotingCard = (props) => {
   const voteValueDA = { value: 'da' };
   const voteValueMAABTIN = { value: 'ma abtin' };
