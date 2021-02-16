@@ -16,7 +16,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 import Login from './screen/Login';
-import Signup from './screen/Signup';
+import Signup from './screen/SignUp/Signup';
 import MainScreen from './screen/MainScreen';
 import SessionScreen from './screen/SessionScreen';
 import HeaderContainer from './components/HeaderComponent/Header';
