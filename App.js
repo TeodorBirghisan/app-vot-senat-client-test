@@ -58,14 +58,18 @@ function urlRedirect(url) {
 
 export default function App() {
   const [fromExternalPath, setFromExternalPath] = useState(false);
+  const [userRole, setUserRole] = useState('');
   useEffect(() => {
     Linking.getInitialURL().then((url) => {
-      const { path } = Linking.parse(url);
+      console.log(Linking.parse(url));
+      const { path, queryParams } = Linking.parse(url);
+      console.log(queryParams.role);
       //console.log(path);
       if (path === null) {
         setFromExternalPath(false);
       } else {
         setFromExternalPath(true);
+        setUserRole(queryParams.role);
       }
     });
   }, []);
@@ -78,11 +82,12 @@ export default function App() {
           component={(navProps) => (
             <RedirectWelcomeScreen
               fromExternalPath={fromExternalPath}
-              //userKey={userKey}
+              userRole={userRole}
               {...navProps}
             />
           )}
         />
+        <Stack.Screen name='Email' component={SendEmailScreen} />
         <Stack.Screen name='Login' component={Login} />
         <Stack.Screen name='BottomNavigator' component={BottomNavigator} />
         <Stack.Screen name='Session' component={SessionDrawer} />

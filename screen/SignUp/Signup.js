@@ -19,7 +19,6 @@ import {
 } from '../../endpoints/Endpoints';
 
 const Signup = (props) => {
-  const navigation = useNavigation();
   const role = useRoute('SignUp').params.role;
   const [emailAddress, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
