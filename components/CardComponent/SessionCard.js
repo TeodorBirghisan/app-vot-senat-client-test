@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
@@ -71,6 +71,7 @@ const SessionCard = (props) => {
       { cancelable: false }
     );
   };
+
   return (
     <Card style={styles.cardContainer}>
       <Icon
@@ -82,11 +83,7 @@ const SessionCard = (props) => {
       />
       <Card.Title>{props.title}</Card.Title>
       <Card.Divider />
-      <Text style={{ marginBottom: 10 }}>
-        Display the live Session if there is any Or display not current Live
-        Session
-        {props.programmed_for}
-      </Text>
+      <Text style={{ marginBottom: 10 }}>{props.programmed_for}</Text>
       <Button
         style={styles.buttonStyle}
         title='JOIN'

@@ -60,6 +60,7 @@ export default function App() {
   const [fromExternalPath, setFromExternalPath] = useState(false);
   const [userRole, setUserRole] = useState('');
   useEffect(() => {
+    const ac = new AbortController();
     Linking.getInitialURL().then((url) => {
       console.log(Linking.parse(url));
       const { path, queryParams } = Linking.parse(url);
@@ -72,6 +73,7 @@ export default function App() {
         setUserRole(queryParams.role);
       }
     });
+    return () => ac.abort();
   }, []);
 
   return (

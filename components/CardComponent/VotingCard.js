@@ -20,7 +20,7 @@ const VotingCard = (props) => {
   const voteValueDA = { value: 'da' };
   const voteValueMAABTIN = { value: 'ma abtin' };
   const voteValueNU = { value: 'nu' };
-
+  const [result, setResult] = useState();
   const voteHandler = (userId, meetingId, topicId, voteValue, token) => {
     voteAsUserAtMeetingForTopic(
       userId,
@@ -29,6 +29,10 @@ const VotingCard = (props) => {
       voteValue,
       token
     ).then((response) => {
+      calculateResultForTopic(topicId).then((response) => {
+        setResult(response.voteValue.value);
+        //console.log(response, 'rezultat');
+      });
       if (response.message != null) {
         Alert.alert(response.message);
       }
@@ -46,9 +50,6 @@ const VotingCard = (props) => {
     votValue,
     topic
   ) => {
-    calculateResultForTopic(topicId).then((response) => {
-      console.log(response, 'rezultat');
-    });
     const token = await getInSecureStore(username);
     const decodedToken = await jwt_decode(token);
     if (votValue === 'DA') {
@@ -74,7 +75,9 @@ const VotingCard = (props) => {
 
   return (
     <Card>
-      <Card.Title>{props.topicResult}</Card.Title>
+      <Card.Title>{`Rezultatul actual:     ${
+        result || props.topicResult
+      }`}</Card.Title>
       <Card.Divider />
       <Text>{props.topicContent}</Text>
       <View style={styles.buttonContainer}>

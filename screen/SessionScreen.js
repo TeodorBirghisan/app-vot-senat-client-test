@@ -1,5 +1,11 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { View, StyleSheet, ScrollView, FlatList } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  FlatList,
+  RefreshControl
+} from 'react-native';
 
 import VotingCard from '../components/CardComponent/VotingCard';
 import { useRoute } from '@react-navigation/native';
@@ -32,19 +38,13 @@ const SessionScreen = (props) => {
     <Item id={item.id} result={item.result} topic={item.topic} />
   );
 
-  useEffect(() => {
+  const onRefresh = useEffect(() => {
     const ac = new AbortController();
     getAllTopicsInMeeting(sessionID).then((response) => {
       setTopics(response);
-      /*response.forEach((element) => {
-        calculateResultForTopic(element.id).then((response) =>
-          console.log(response)
-        );
-      });*/
     });
     return () => ac.abort();
   }, []);
-  //console.log(sessionID);
 
   return (
     <View>
