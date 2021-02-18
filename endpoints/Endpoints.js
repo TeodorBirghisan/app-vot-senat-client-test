@@ -283,8 +283,7 @@ async function getVoteOfUserInMeeting(userId, meetingId, topicId) {
       apiGetVoteOfUserInMeeting(userId, meetingId, topicId)
     );
     let responseJson = await response.json();
-    console.log(responseJson);
-    return responseJson;
+    return responseJson.data;
   } catch (error) {
     console.log(error);
   }

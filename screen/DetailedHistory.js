@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import { getVoteOfUserInMeeting } from '../endpoints/Endpoints';
+import {
+  getVoteOfUserInMeeting,
+  getAllMembersFromMeeting
+} from '../endpoints/Endpoints';
 import { getInSecureStore } from '../constants/Functions';
 import jwt_decode from 'jwt-decode';
 
@@ -10,10 +13,28 @@ const DetailedHistory = () => {
   const userID = useRoute('DetailedHistory').params.userId;
   const sessionID = useRoute('DetailedHistory').params.sessionID;
   const topicID = useRoute('DetailedHistory').params.topicID;
+  const [result, setResult] = useState([]);
+  ////am nevoie de toti useri din meetingu asta
+  ////dupa fiecare user ce a votat la topicu asta
+
   useEffect(() => {
-    getVoteOfUserInMeeting(userID, sessionID, topicID).then((response) => {
-      console.log(response.data);
+    getAllMembersFromMeeting(sessionID).then((response) => {
+      response.forEach((element) => {
+        //console.log(element);
+        getVoteOfUserInMeeting(element.id, sessionID, topicID).then(
+          (response) => {
+            console.log(
+              `${response.user.username} a votat in sedinta ${response.meeting.title} pentru topicul ${response.topic.topic} cu ${response.votValue.value}`
+            );
+            /*
+            setResult(
+              `${response.user.username} a votat in sedinta ${response.meeting.title} pentru topicul ${response.topic.topic} cu ${response.voteValue.value}`
+            );*/
+          }
+        );
+      });
     });
+    //console.log(result);
   }, []);
 
   return (
