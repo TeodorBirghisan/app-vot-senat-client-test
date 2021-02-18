@@ -24,6 +24,8 @@ const apiRegisterSenator = `${HOST}/user/register-senator`;
 const apiRegisterAdmin = `${HOST}/user/register-admin`;
 const apiRegisterSuperAdmin = `${HOST}/user/register-super-admin`;
 const apiRegisterGuest = `${HOST}/user/register-guest`;
+const apiGetVoteOfUserInMeeting = (userId, meetingId, topicId) =>
+  `${HOST}/vote/getVoteResultFromUser/${userId}/meeting/${meetingId}/topic/${topicId}`;
 
 async function postLoginSuperAdmin(params) {
   try {
@@ -275,6 +277,19 @@ async function registerSuperAdmin(params) {
   }
 }
 
+async function getVoteOfUserInMeeting(userId, meetingId, topicId) {
+  try {
+    let response = await fetch(
+      apiGetVoteOfUserInMeeting(userId, meetingId, topicId)
+    );
+    let responseJson = await response.json();
+    console.log(responseJson);
+    return responseJson;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
   postLoginSuperAdmin,
   postLoginAdmin,
@@ -292,5 +307,6 @@ export {
   deleteAMeeting,
   registerAdmin,
   registerSenator,
-  registerSuperAdmin
+  registerSuperAdmin,
+  getVoteOfUserInMeeting
 };
