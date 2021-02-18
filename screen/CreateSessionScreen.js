@@ -37,7 +37,7 @@ const formateDate = (date) => {
 };
 
 const CreateSessionScreen = (props) => {
-  const user = useRoute('MainScreen').params.username;
+  const user = useRoute('CreateSessionScreen').params.username;
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);

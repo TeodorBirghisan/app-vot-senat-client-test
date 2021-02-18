@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
@@ -14,8 +14,6 @@ const SessionCard = (props) => {
     const decodedToken = await jwt_decode(token);
     //console.log(decodedToken);
     //console.log(`UTILIZATORUL  ${props.username}`);
-    console.log(decodedToken);
-    console.log(token);
     joinMeetingAsUSer(props.sessionID, decodedToken.user_id, token).then(
       (response) => {
         console.log(response);
@@ -73,6 +71,7 @@ const SessionCard = (props) => {
       { cancelable: false }
     );
   };
+
   return (
     <Card style={styles.cardContainer}>
       <Icon
@@ -84,11 +83,7 @@ const SessionCard = (props) => {
       />
       <Card.Title>{props.title}</Card.Title>
       <Card.Divider />
-      <Text style={{ marginBottom: 10 }}>
-        Display the live Session if there is any Or display not current Live
-        Session
-        {props.programmed_for}
-      </Text>
+      <Text style={{ marginBottom: 10 }}>{props.programmed_for}</Text>
       <Button
         style={styles.buttonStyle}
         title='JOIN'

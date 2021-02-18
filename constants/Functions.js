@@ -5,6 +5,26 @@ const replaceQuote = (string) => {
   return string.replace(/['"]+/g, '');
 };
 
+const formateDate = (date) => {
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  let ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  let strTime = hours + ':' + minutes + ' ' + ampm;
+  return (
+    date.getMonth() +
+    1 +
+    '/' +
+    date.getDate() +
+    '/' +
+    date.getFullYear() +
+    '  ' +
+    strTime
+  );
+};
+
 async function saveInSecureStore(key, value) {
   try {
     await SecureStore.setItemAsync(key, JSON.stringify(value));
@@ -39,4 +59,10 @@ const deleteInSecureStore = async (key) => {
   }
 };
 
-export { saveInSecureStore, getInSecureStore, deleteInSecureStore };
+export {
+  saveInSecureStore,
+  getInSecureStore,
+  deleteInSecureStore,
+  replaceQuote,
+  formateDate
+};

@@ -9,9 +9,11 @@ const UserList = (props) => {
   const sessionID = useRoute('Users').params.sessionID;
   const [users, setUsers] = useState();
   useEffect(() => {
+    const ac = new AbortController();
     getAllMembersFromMeeting(sessionID).then((response) => {
       setUsers(response);
     });
+    return () => ac.abort();
   }, []);
 
   const keyExtractor = (item, index) => item.id.toString();
