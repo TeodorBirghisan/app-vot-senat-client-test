@@ -61,6 +61,7 @@ function urlRedirect(url) {
   });*/
 
 export default function App() {
+  console.disableYellowBox = true;
   const [fromExternalPath, setFromExternalPath] = useState(false);
   const [userRole, setUserRole] = useState('');
   useEffect(() => {

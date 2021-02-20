@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import { View, StyleSheet, Text, FlatList } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import {
   getVoteOfUserInMeeting,
@@ -7,6 +7,7 @@ import {
 } from '../endpoints/Endpoints';
 import { getInSecureStore } from '../constants/Functions';
 import jwt_decode from 'jwt-decode';
+import { ListItem, Avatar, Icon } from 'react-native-elements';
 
 const DetailedHistory = () => {
   const username = useRoute('DetailedHistory').params.username;
@@ -17,30 +18,61 @@ const DetailedHistory = () => {
   ////am nevoie de toti useri din meetingu asta
   ////dupa fiecare user ce a votat la topicu asta
 
+  /*const addElemsCallback = useCallback(
+    (count) => {
+      setResult((elems) => {
+        const newElems = [...elems];
+        for (let i = 0; i < count; i++) {
+          newElems.push(i);
+        }
+        return newElems;
+      });
+    },
+    [setResult]
+  );*/
+
   useEffect(() => {
     getAllMembersFromMeeting(sessionID).then((response) => {
       response.forEach((element) => {
         //console.log(element);
         getVoteOfUserInMeeting(element.id, sessionID, topicID).then(
           (response) => {
-            console.log(
-              `${response.user.username} a votat in sedinta ${response.meeting.title} pentru topicul ${response.topic.topic} cu ${response.votValue.value}`
-            );
-            /*
-            setResult(
-              `${response.user.username} a votat in sedinta ${response.meeting.title} pentru topicul ${response.topic.topic} cu ${response.voteValue.value}`
-            );*/
+            if (response.hasOwnProperty('error') === false) {
+              console.log(
+                `${response.user.username} a votat in sedinta ${response.meeting.title} pentru topicul ${response.topic.topic} cu ${response.votValue.value}`
+              );
+              setResult((oldResult) => [
+                ...oldResult,
+                `${response.user.username} a votat in sedinta ${response.meeting.title} pentru topicul ${response.topic.topic} cu ${response.votValue.value}`
+              ]);
+            }
+            /*if (response != null)
+              setResult((prev) =>
+                prev.add(
+                  `${response.user.username} a votat in sedinta ${response.meeting.title} pentru topicul ${response.topic.topic} cu ${response.voteValue.value}`
+                )
+              );*/
           }
         );
       });
     });
-    //console.log(result);
   }, []);
 
+  const keyExtractor = (item) => item.username;
+  const renderItem = ({ item }) => (
+    <ListItem bottomDivider>
+      <ListItem.Content>
+        <ListItem.Title>{item}</ListItem.Title>
+      </ListItem.Content>
+    </ListItem>
+  );
+
   return (
-    <View>
-      <Text>ALOHA</Text>
-    </View>
+    <FlatList
+      keyExtractor={keyExtractor}
+      data={result}
+      renderItem={renderItem}
+    />
   );
 };
 
