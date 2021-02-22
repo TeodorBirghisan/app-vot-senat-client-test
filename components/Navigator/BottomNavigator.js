@@ -8,6 +8,7 @@ import jwt_decode from 'jwt-decode';
 import SendEmailScreen from '../../screen/SendEmailScreen';
 import CreateSessionScreen from '../../screen/CreateSessionScreen';
 import MainScreen from '../../screen/MainScreen';
+import History from '../../screen/HistoryScreen';
 
 const BottomTabs = createMaterialBottomTabNavigator();
 
@@ -31,6 +32,11 @@ const AdminScreens = (props) => {
         component={CreateSessionScreen}
         initialParams={{ username: props.username }}
       />
+      <BottomTabs.Screen
+        name='History'
+        component={History}
+        initialParams={{ username: props.username }}
+      />
       <BottomTabs.Screen name='SendEmailScreen' component={SendEmailScreen} />
     </BottomTabs.Navigator>
   );
@@ -42,6 +48,11 @@ const SenatorScreens = (props) => {
       <BottomTabs.Screen
         name='MainScreen'
         component={MainScreen}
+        initialParams={{ username: props.username }}
+      />
+      <BottomTabs.Screen
+        name='History'
+        component={History}
         initialParams={{ username: props.username }}
       />
     </BottomTabs.Navigator>
