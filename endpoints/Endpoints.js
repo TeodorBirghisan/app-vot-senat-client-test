@@ -1,4 +1,4 @@
-const HOST = 'http://192.168.1.5:8080';
+const HOST = 'http://192.168.1.2:8080';
 
 const apiLoginAdmin = `${HOST}/user/login-admin`;
 const apiLoginSuperAdmin = `${HOST}/user/login-super-admin`;
