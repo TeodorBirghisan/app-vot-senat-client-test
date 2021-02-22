@@ -101,7 +101,7 @@ const CreateSessionScreen = (props) => {
           value={title}
           onChangeText={setTitle}
         />
-        <View>
+        <View style={styles.dateContainer}>
           <Button onPress={showDatepicker} title='Show date picker!' />
         </View>
         <View>
@@ -128,7 +128,6 @@ const CreateSessionScreen = (props) => {
         <CreateTopic meetingID={meetingID} user={user} />
         <View>
           <Button title={'create session'} onPress={() => onCreateSession()} />
-          <Button title={'View all'} onPress={() => console.log(session)} />
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -141,6 +140,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'center'
   },
+  dateContainer: {},
   dateText: {
     paddingTop: 20,
     alignItems: 'center'

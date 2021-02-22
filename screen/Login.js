@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-import InputField from '../components/InputComponent/InputField';
+import { Input } from 'react-native-elements';
 import PasswordField from '../components/InputComponent/PasswordField';
 import { CheckBox } from 'react-native-elements';
 import {
@@ -59,9 +59,6 @@ const LoginInput = (props) => {
   };
 
   const handleLogin = (postFunction, postData) => {
-    //TODO: Cand  dau set la username si la token e promise si se face de abia dupa ce dau login, mie imi trebe instant
-    // trebe sa fac useState pt token si user, si doar dupa ce au valori sa le salvez in secure si dupa sa navighez
-    // setFunctie are callback ca si second parametru adica sa execute doar dupa ce e setanit
     postFunction(postData).then((response) => {
       if (response.success === true) {
         saveInSecureStore(response.username, response.token);
@@ -92,39 +89,6 @@ const LoginInput = (props) => {
     });
   };
 
-  /*const login = () => {
-    //TODO: Cand  dau set la username si la token e promise si se face de abia dupa ce dau login, mie imi trebe instant
-    // trebe sa fac useState pt token si user, si doar dupa ce au valori sa le salvez in secure si dupa sa navighez
-    postLoginAdmin(postData).then((response) => {
-      if (response.success === true) {
-        saveInSecureStore(response.username, response.token);
-        setUser(response.username);
-        setToken(response.token);
-        navigation.navigate('BottomNavigator', {
-          username: response.username
-        });
-        //TODO: Welcome user asta sa fie in main screen in Header...
-      } else {
-        Alert.alert(
-          response.message,
-          'Please enter login credentials again',
-          [
-            {
-              text: 'Cancel',
-              style: 'cancel'
-            },
-            {
-              text: 'OK'
-            }
-          ],
-          { cancelable: false }
-        );
-        //TODO: setFIELDUGRESIT('');
-        console.log(response.message);
-      }
-    });
-  };
-*/
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
@@ -156,75 +120,109 @@ const LoginInput = (props) => {
         Keyboard.dismiss();
       }}
     >
-      <View style={styles.input}>
-        <Text style={styles.text}>Email Address</Text>
-        <InputField
-          placeholder='email@address.com'
-          value={emailAddress}
-          onChangeText={setEmailAddress}
-          leftIcon={
-            <Icon type='font-awesome' name='envelope' size={24} color='black' />
-          }
-        />
-        <Text style={styles.text}>Password</Text>
-        <PasswordField
-          placeholder='password'
-          value={password}
-          onChangeText={setPassword}
-        />
-        <CheckBox
-          center
-          title='Super Admin Account'
-          checkedIcon='dot-circle-o'
-          uncheckedIcon='circle-o'
-          onPress={() => {
-            setIsSuperAdmin(true);
-            setIsSenator(false);
-            setIsAdmin(false);
-          }}
-          checked={isSuperAdmin}
-        />
-        <CheckBox
-          center
-          title='Admin Account'
-          checkedIcon='dot-circle-o'
-          uncheckedIcon='circle-o'
-          onPress={() => {
-            setIsAdmin(true);
-            setIsSuperAdmin(false);
-            setIsSenator(false);
-          }}
-          checked={isAdmin}
-        />
-        <CheckBox
-          center
-          title='Senator Account'
-          checkedIcon='dot-circle-o'
-          uncheckedIcon='circle-o'
-          onPress={() => {
-            setIsSenator(true);
-            setIsSuperAdmin(false);
-            setIsAdmin(false);
-          }}
-          checked={isSenator}
-        />
-        <Button
-          title='Login'
-          style={styles.button}
-          onPress={() => {
-            verifyAccount();
-          }}
-        />
+      <View style={styles.container}>
+        <View style={styles.inputContainer}>
+          <View>
+            <Input
+              label='Email Address'
+              placeholder='email@address.com'
+              value={emailAddress}
+              onChangeText={setEmailAddress}
+              leftIcon={
+                <Icon
+                  type='font-awesome'
+                  name='envelope'
+                  size={24}
+                  color='black'
+                />
+              }
+              style={styles.input}
+            />
+          </View>
+          <View>
+            <Input
+              label='Password'
+              placeholder='password'
+              secureTextEntry={true}
+              leftIcon={
+                <Icon type='font-awesome' name='lock' size={24} color='black' />
+              }
+              value={password}
+              onChangeText={setPassword}
+              style={styles.input}
+            />
+          </View>
+        </View>
+        <View style={styles.checkboxContainer}>
+          <View>
+            <CheckBox
+              center
+              title='Super Admin Account'
+              checkedIcon='dot-circle-o'
+              uncheckedIcon='circle-o'
+              onPress={() => {
+                setIsSuperAdmin(true);
+                setIsSenator(false);
+                setIsAdmin(false);
+              }}
+              checked={isSuperAdmin}
+            />
+          </View>
+          <View>
+            <CheckBox
+              center
+              title='Admin Account'
+              checkedIcon='dot-circle-o'
+              uncheckedIcon='circle-o'
+              onPress={() => {
+                setIsAdmin(true);
+                setIsSuperAdmin(false);
+                setIsSenator(false);
+              }}
+              checked={isAdmin}
+            />
+          </View>
+          <View>
+            <CheckBox
+              center
+              title='Senator Account'
+              checkedIcon='dot-circle-o'
+              uncheckedIcon='circle-o'
+              onPress={() => {
+                setIsSenator(true);
+                setIsSuperAdmin(false);
+                setIsAdmin(false);
+              }}
+              style={styles.checkbox}
+              checked={isSenator}
+            />
+          </View>
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button
+            title='Login'
+            style={styles.button}
+            onPress={() => {
+              verifyAccount();
+            }}
+          />
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
-  input: {
-    flex: 1,
-    alignContent: 'center',
-    justifyContent: 'center'
+  container: { flex: 1, alignContent: 'center', justifyContent: 'center' },
+  inputContainer: {},
+  input: {},
+  checkboxContainer: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  checkbox: {},
+  buttonContainer: {
+    alignItems: 'center'
   },
   button: {},
   text: {
