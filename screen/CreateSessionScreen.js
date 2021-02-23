@@ -15,6 +15,8 @@ import CreateTopic from '../components/Modal/createTopic';
 import { postCreateMeeting } from '../endpoints/Endpoints';
 import { useRoute } from '@react-navigation/native';
 import { getInSecureStore } from '../constants/Functions';
+import { Alert } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const formateDate = (date) => {
   let hours = date.getHours();
@@ -60,6 +62,18 @@ const CreateSessionScreen = (props) => {
     setSession(postData);
     postCreateMeeting(postData, token).then((response) => {
       setMeetingID(response.data.id);
+      console.log(response.data);
+      Alert.alert(
+        'Topic pentru meeting',
+        'Mesaj',
+        [
+          {
+            text: 'OK',
+            onPress: () => {}
+          }
+        ],
+        { cancelable: false }
+      );
     });
     setDuration('');
     setTitle('');
@@ -96,16 +110,29 @@ const CreateSessionScreen = (props) => {
       }}
     >
       <View style={styles.createSessionContainer}>
-        <InputField
-          placeholder='Title for session'
-          value={title}
-          onChangeText={setTitle}
-        />
-        <View style={styles.dateContainer}>
-          <Button onPress={showDatepicker} title='Show date picker!' />
+        <View style={styles.inputContainer}>
+          <View style={styles.input}>
+            <InputField
+              placeholder='Title for session'
+              value={title}
+              onChangeText={setTitle}
+            />
+          </View>
+          <View style={styles.input}>
+            <InputField
+              placeholder='Set duration'
+              value={duration}
+              onChangeText={setDuration}
+            />
+          </View>
         </View>
-        <View>
-          <Button onPress={showTimepicker} title='Show time picker!' />
+        <View style={styles.dateContainer}>
+          <View style={styles.date}>
+            <Button onPress={showDatepicker} title='Show date picker!' />
+          </View>
+          <View style={styles.date}>
+            <Button onPress={showTimepicker} title='Show time picker!' />
+          </View>
         </View>
         {show && (
           <DateTimePicker
@@ -117,16 +144,14 @@ const CreateSessionScreen = (props) => {
             onChange={onChange}
           />
         )}
-        <InputField
-          placeholder='Set duration'
-          value={duration}
-          onChangeText={setDuration}
-        />
+
         <View style={styles.dateText}>
           <Text style={styles.text}>Selected date: {formateDate(date)}</Text>
         </View>
-        <CreateTopic meetingID={meetingID} user={user} />
-        <View>
+        <View style={styles.topic}>
+          <CreateTopic meetingID={meetingID} user={user} />
+        </View>
+        <View style={styles.createSes}>
           <Button title={'create session'} onPress={() => onCreateSession()} />
         </View>
       </View>
@@ -137,15 +162,45 @@ const CreateSessionScreen = (props) => {
 const styles = StyleSheet.create({
   createSessionContainer: {
     flex: 1,
-    alignContent: 'center',
     justifyContent: 'center'
   },
-  dateContainer: {},
-  dateText: {
-    paddingTop: 20,
+  inputContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    backgroundColor: 'red',
+    width: '85%'
+  },
+  input: { backgroundColor: 'black', width: '90%', justifyContent: 'center' },
+  dateContainer: {
+    flex: 1,
+    backgroundColor: 'green',
+    justifyContent: 'center',
+    width: '85%',
+    alignSelf: 'center',
     alignItems: 'center'
   },
-  text: { fontSize: 20 }
+  date: { width: '90%', justifyContent: 'center' },
+  dateText: {
+    padding: 20,
+    alignItems: 'center'
+  },
+  text: { fontSize: 20, fontWeight: 'bold' },
+  topic: {
+    flex: 1,
+    backgroundColor: 'pink',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    width: '75%'
+  },
+  createSes: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '45%'
+  }
 });
 
 export default CreateSessionScreen;

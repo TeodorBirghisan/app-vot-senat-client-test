@@ -5,6 +5,7 @@ import {
   Button,
   Text,
   TouchableWithoutFeedback,
+  TouchableOpacity,
   Keyboard,
   Alert,
   BackHandler
@@ -12,7 +13,6 @@ import {
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input } from 'react-native-elements';
-import PasswordField from '../components/InputComponent/PasswordField';
 import { CheckBox } from 'react-native-elements';
 import {
   postLoginAdmin,
@@ -119,42 +119,39 @@ const LoginInput = (props) => {
       onPress={() => {
         Keyboard.dismiss();
       }}
+      style={styles.touchable}
     >
       <View style={styles.container}>
         <View style={styles.inputContainer}>
-          <View>
-            <Input
-              label='Email Address'
-              placeholder='email@address.com'
-              value={emailAddress}
-              onChangeText={setEmailAddress}
-              leftIcon={
-                <Icon
-                  type='font-awesome'
-                  name='envelope'
-                  size={24}
-                  color='black'
-                />
-              }
-              style={styles.input}
-            />
-          </View>
-          <View>
-            <Input
-              label='Password'
-              placeholder='password'
-              secureTextEntry={true}
-              leftIcon={
-                <Icon type='font-awesome' name='lock' size={24} color='black' />
-              }
-              value={password}
-              onChangeText={setPassword}
-              style={styles.input}
-            />
-          </View>
+          <Input
+            label='Email Address'
+            placeholder='email@address.com'
+            value={emailAddress}
+            onChangeText={setEmailAddress}
+            leftIcon={
+              <Icon
+                type='font-awesome'
+                name='envelope'
+                size={24}
+                color='black'
+              />
+            }
+            style={styles.input}
+          />
+          <Input
+            label='Password'
+            placeholder='password'
+            secureTextEntry={true}
+            leftIcon={
+              <Icon type='font-awesome' name='lock' size={24} color='black' />
+            }
+            value={password}
+            onChangeText={setPassword}
+            style={styles.input}
+          />
         </View>
         <View style={styles.checkboxContainer}>
-          <View>
+          <View style={styles.checkbox}>
             <CheckBox
               center
               title='Super Admin Account'
@@ -168,7 +165,7 @@ const LoginInput = (props) => {
               checked={isSuperAdmin}
             />
           </View>
-          <View>
+          <View style={styles.checkbox}>
             <CheckBox
               center
               title='Admin Account'
@@ -182,7 +179,7 @@ const LoginInput = (props) => {
               checked={isAdmin}
             />
           </View>
-          <View>
+          <View style={styles.checkbox}>
             <CheckBox
               center
               title='Senator Account'
@@ -198,36 +195,51 @@ const LoginInput = (props) => {
             />
           </View>
         </View>
-        <View style={styles.buttonContainer}>
-          <Button
-            title='Login'
-            style={styles.button}
-            onPress={() => {
-              verifyAccount();
-            }}
-          />
-        </View>
+        <TouchableOpacity
+          onPress={() => {
+            verifyAccount();
+          }}
+          style={styles.buttonContainer}
+        >
+          <Text style={styles.text}>Login</Text>
+        </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignContent: 'center', justifyContent: 'center' },
-  inputContainer: {},
+  touchable: {},
+  container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  inputContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    width: '85%',
+    maxHeight: '40%'
+  },
   input: {},
   checkboxContainer: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    width: '60%',
+    paddingBottom: 20
   },
-  checkbox: {},
+  checkbox: { width: '100%' },
   buttonContainer: {
-    alignItems: 'center'
+    width: '45%',
+    alignItems: 'center',
+    backgroundColor: 'red',
+    elevation: 8,
+    backgroundColor: '#009688',
+    borderRadius: 7,
+    paddingVertical: 5,
+    paddingHorizontal: 7
   },
-  button: {},
   text: {
+    fontSize: 18,
+    color: '#fff',
     fontWeight: 'bold',
-    padding: 10
+    alignSelf: 'center'
   }
 });
 
