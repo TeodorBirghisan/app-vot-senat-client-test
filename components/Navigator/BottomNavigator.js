@@ -4,7 +4,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { useRoute } from '@react-navigation/native';
 import { getInSecureStore } from '../../constants/Functions';
 import jwt_decode from 'jwt-decode';
-
+import { Icon } from 'react-native-elements';
 import SendEmailScreen from '../../screen/SendEmailScreen';
 import CreateSessionScreen from '../../screen/CreateSessionScreen';
 import MainScreen from '../../screen/MainScreen';
@@ -26,18 +26,45 @@ const AdminScreens = (props) => {
         name='MainScreen'
         component={MainScreen}
         initialParams={{ username: props.username }}
+        options={{
+          tabBarIcon: () => (
+            <Icon name='home' type='font-awesome' color='#00aced' />
+          ),
+          tabBarLabel: 'Home'
+        }}
       />
       <BottomTabs.Screen
         name='CreateSessionScreen'
         component={CreateSessionScreen}
         initialParams={{ username: props.username }}
+        options={{
+          tabBarIcon: () => (
+            <Icon name='plus' type='font-awesome' color='#00aced' />
+          ),
+          tabBarLabel: 'Create Session'
+        }}
       />
       <BottomTabs.Screen
         name='History'
         component={History}
         initialParams={{ username: props.username }}
+        options={{
+          tabBarIcon: () => (
+            <Icon name='history' type='font-awesome' color='#00aced' />
+          ),
+          tabBarLabel: 'History'
+        }}
       />
-      <BottomTabs.Screen name='SendEmailScreen' component={SendEmailScreen} />
+      <BottomTabs.Screen
+        name='SendEmailScreen'
+        component={SendEmailScreen}
+        options={{
+          tabBarIcon: () => (
+            <Icon name='envelope' type='font-awesome' color='#00aced' />
+          ),
+          tabBarLabel: 'Send Email'
+        }}
+      />
     </BottomTabs.Navigator>
   );
 };
@@ -49,11 +76,23 @@ const SenatorScreens = (props) => {
         name='MainScreen'
         component={MainScreen}
         initialParams={{ username: props.username }}
+        options={{
+          tabBarIcon: () => (
+            <Icon name='home' type='font-awesome' color='#00aced' />
+          ),
+          tabBarLabel: 'Home'
+        }}
       />
       <BottomTabs.Screen
         name='History'
         component={History}
         initialParams={{ username: props.username }}
+        options={{
+          tabBarIcon: () => (
+            <Icon name='history' type='font-awesome' color='#00aced' />
+          ),
+          tabBarLabel: 'History'
+        }}
       />
     </BottomTabs.Navigator>
   );

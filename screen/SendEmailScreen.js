@@ -3,7 +3,7 @@ import { View, StyleSheet, Button, Alert } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import email from 'react-native-email';
 import * as Linking from 'expo-linking';
-import InputField from '../components/InputComponent/InputField';
+import { Input } from 'react-native-elements';
 
 const handleEmail = (to, subject, body) => {
   //const to = ['birghisanteodor@yahoo.com'];
@@ -63,44 +63,57 @@ const SendEmailScreen = (props) => {
 
   return (
     <View style={styles.container}>
-      <InputField
+      <Input
         style={styles.inputField}
         placeholder='Insert Email Address Here'
         //label={'Select the Email Address and the type of Account'}
         value={inputValue}
         onChangeText={setInputValue}
       />
-      <CheckBox
-        center
-        title='Admin Account'
-        checkedIcon='dot-circle-o'
-        uncheckedIcon='circle-o'
-        onPress={() => {
-          setIsAdmin(true);
-          setIsSenator(false);
-        }}
-        checked={isAdmin}
-      />
-
-      <CheckBox
-        center
-        title='Senator Account'
-        checkedIcon='dot-circle-o'
-        uncheckedIcon='circle-o'
-        onPress={() => {
-          setIsAdmin(false);
-          setIsSenator(true);
-        }}
-        checked={isSenator}
-      />
-      <Button title='Send Email' onPress={() => verifyAccount()} />
+      <View>
+        <View>
+          <CheckBox
+            center
+            title='Admin Account'
+            checkedIcon='dot-circle-o'
+            uncheckedIcon='circle-o'
+            onPress={() => {
+              setIsAdmin(true);
+              setIsSenator(false);
+            }}
+            checked={isAdmin}
+          />
+        </View>
+        <View>
+          <CheckBox
+            center
+            title='Senator Account'
+            checkedIcon='dot-circle-o'
+            uncheckedIcon='circle-o'
+            onPress={() => {
+              setIsAdmin(false);
+              setIsSenator(true);
+            }}
+            checked={isSenator}
+          />
+          <View style={styles.buttonContainer}>
+            <Button
+              title='Send Email'
+              style={styles.button}
+              onPress={() => verifyAccount()}
+            />
+          </View>
+        </View>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  inputField: {},
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center' }
+  inputField: { fontWeight: 'bold' },
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  buttonContainer: { padding: '10%' },
+  button: {}
 });
 
 export default SendEmailScreen;

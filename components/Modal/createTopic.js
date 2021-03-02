@@ -60,7 +60,7 @@ const CreateTopic = (props) => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Modal
         animationType='slide'
         transparent={true}
@@ -91,11 +91,13 @@ const CreateTopic = (props) => {
                 <TopicModel title={itemData.item.value} />
               )}
             />
-            <Button
-              title={'Add these topics for meeting'}
-              onPress={() => addTopicsToMeeting()}
-              style={{ ...styles.openButton }}
-            />
+            <View style={styles.button}>
+              <Button
+                title={'Add these topics for meeting'}
+                onPress={() => addTopicsToMeeting()}
+                style={{ ...styles.openButton }}
+              />
+            </View>
             <TouchableHighlight
               style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
               onPress={() => {
@@ -121,12 +123,14 @@ const CreateTopic = (props) => {
 };
 
 const styles = StyleSheet.create({
+  container: {},
   centeredView: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 22
   },
+  button: { padding: 10 },
   modalView: {
     //margin: 20,
     width: '90%',
@@ -145,7 +149,7 @@ const styles = StyleSheet.create({
     elevation: 5
   },
   openButton: {
-    backgroundColor: '#F194FF',
+    backgroundColor: 'blue',
     borderRadius: 20,
     padding: 10,
     elevation: 2
