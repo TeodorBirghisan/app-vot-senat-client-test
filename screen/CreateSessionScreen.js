@@ -169,15 +169,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    backgroundColor: 'red',
-    width: '85%'
+    width: '85%',
+    maxHeight: '25%'
   },
-  input: { backgroundColor: 'black', width: '90%', justifyContent: 'center' },
+  input: { width: '90%', justifyContent: 'center' },
   dateContainer: {
     flex: 1,
-    backgroundColor: 'green',
+    flexDirection: 'column-reverse',
     justifyContent: 'center',
     width: '85%',
+    maxHeight: '25%',
     alignSelf: 'center',
     alignItems: 'center'
   },
@@ -189,11 +190,11 @@ const styles = StyleSheet.create({
   text: { fontSize: 20, fontWeight: 'bold' },
   topic: {
     flex: 1,
-    backgroundColor: 'pink',
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
-    width: '75%'
+    width: '30%',
+    maxHeight: '15%'
   },
   createSes: {
     alignSelf: 'center',
