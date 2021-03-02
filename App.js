@@ -25,6 +25,10 @@ import CreateSessionScreen from './screen/CreateSessionScreen';
 import BottomNavigator from './components/Navigator/BottomNavigator';
 import SessionDrawer from './components/Drawer/SessionDrawer';
 import RedirectWelcomeScreen from './screen/RedirectWelcomeScreen';
+import HistoryScreen from './screen/HistoryScreen';
+import SessionHistoryScreen from './screen/SessionHistoryScreen';
+import SessionHistoryDrawer from './components/Drawer/SessionHistoryDrawer';
+import DetailedHistory from './screen/DetailedHistory';
 import * as SecureStore from 'expo-secure-store';
 import * as Linking from 'expo-linking';
 
@@ -57,6 +61,7 @@ function urlRedirect(url) {
   });*/
 
 export default function App() {
+  console.disableYellowBox = true;
   const [fromExternalPath, setFromExternalPath] = useState(false);
   const [userRole, setUserRole] = useState('');
   useEffect(() => {
@@ -94,6 +99,11 @@ export default function App() {
         <Stack.Screen name='BottomNavigator' component={BottomNavigator} />
         <Stack.Screen name='Session' component={SessionDrawer} />
         <Stack.Screen name='SignUp' component={Signup} />
+        <Stack.Screen
+          name='SessionHistoryDrawer'
+          component={SessionHistoryDrawer}
+        />
+        <Stack.Screen name='DetailedHistory' component={DetailedHistory} />
       </Stack.Navigator>
     </NavigationContainer>
   );
