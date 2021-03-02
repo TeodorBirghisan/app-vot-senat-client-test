@@ -26,6 +26,7 @@ const apiRegisterSuperAdmin = `${HOST}/user/register-super-admin`;
 const apiRegisterGuest = `${HOST}/user/register-guest`;
 const apiGetVoteOfUserInMeeting = (userId, meetingId, topicId) =>
   `${HOST}/vote/getVoteResultFromUser/${userId}/meeting/${meetingId}/topic/${topicId}`;
+const apiVerifyIsOverMeeting = `${HOST}/meeting/verifyIsOver`;
 
 async function postLoginSuperAdmin(params) {
   try {
@@ -289,6 +290,19 @@ async function getVoteOfUserInMeeting(userId, meetingId, topicId) {
   }
 }
 
+async function verifyIsOverMeeting() {
+  try {
+    let response = await fetch(apiVerifyIsOverMeeting, {
+      method: 'PUT',
+      headers: { 'Content-type': 'application/json; charset=UTF-8' }
+    });
+    let json = await response.json();
+    return json;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
   postLoginSuperAdmin,
   postLoginAdmin,
@@ -307,5 +321,6 @@ export {
   registerAdmin,
   registerSenator,
   registerSuperAdmin,
-  getVoteOfUserInMeeting
+  getVoteOfUserInMeeting,
+  verifyIsOverMeeting
 };

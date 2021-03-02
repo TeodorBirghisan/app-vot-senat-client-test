@@ -11,9 +11,11 @@ const History = (props) => {
     const ac = new AbortController();
     getAllMeetings().then((response) => {
       setMeetings(
-        response.sort(
-          (a, b) => new Date(a.programmed_for) - new Date(b.programmed_for)
-        )
+        response
+          .filter((a) => a.isOver === true)
+          .sort(
+            (a, b) => new Date(a.programmed_for) - new Date(b.programmed_for)
+          )
       );
     });
     //if (meetings != null) console.log(Object.keys(meetings).length);
