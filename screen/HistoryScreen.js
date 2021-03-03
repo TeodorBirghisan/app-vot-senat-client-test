@@ -26,9 +26,7 @@ const History = (props) => {
         sessionID={id}
         username={useRoute('History').params.username}
         title={title}
-        programmed_for={`Programmed_for: ${formateDate(
-          new Date(programmed_for)
-        )}`}
+        programmed_for={`Date: ${formateDate(new Date(programmed_for))}`}
       />
     </View>
   );
@@ -43,7 +41,7 @@ const History = (props) => {
 
   return (
     <View>
-      <Text>ISTORIC</Text>
+      <Text style={styles.text}>ISTORIC</Text>
       <FlatList
         data={meetings}
         renderItem={renderItem}
@@ -53,6 +51,11 @@ const History = (props) => {
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  text: {
+    fontSize: 25,
+    alignSelf: 'center'
+  }
+});
 
 export default History;

@@ -21,14 +21,14 @@ const testRole = async (username) => {
 
 const AdminScreens = (props) => {
   return (
-    <BottomTabs.Navigator>
+    <BottomTabs.Navigator barStyle={{ backgroundColor: '#8ac4d0' }}>
       <BottomTabs.Screen
         name='MainScreen'
         component={MainScreen}
         initialParams={{ username: props.username }}
         options={{
           tabBarIcon: () => (
-            <Icon name='home' type='font-awesome' color='#00aced' />
+            <Icon name='home' type='font-awesome' color='#28527a' />
           ),
           tabBarLabel: 'Home'
         }}
@@ -39,7 +39,7 @@ const AdminScreens = (props) => {
         initialParams={{ username: props.username }}
         options={{
           tabBarIcon: () => (
-            <Icon name='plus' type='font-awesome' color='#00aced' />
+            <Icon name='plus' type='font-awesome' color='#28527a' />
           ),
           tabBarLabel: 'Create Session'
         }}
@@ -50,7 +50,7 @@ const AdminScreens = (props) => {
         initialParams={{ username: props.username }}
         options={{
           tabBarIcon: () => (
-            <Icon name='history' type='font-awesome' color='#00aced' />
+            <Icon name='history' type='font-awesome' color='#28527a' />
           ),
           tabBarLabel: 'History'
         }}
@@ -60,7 +60,7 @@ const AdminScreens = (props) => {
         component={SendEmailScreen}
         options={{
           tabBarIcon: () => (
-            <Icon name='envelope' type='font-awesome' color='#00aced' />
+            <Icon name='envelope' type='font-awesome' color='#28527a' />
           ),
           tabBarLabel: 'Send Email'
         }}
@@ -71,14 +71,14 @@ const AdminScreens = (props) => {
 
 const SenatorScreens = (props) => {
   return (
-    <BottomTabs.Navigator>
+    <BottomTabs.Navigator style={{ backgroundColor: '#8ac4d0' }}>
       <BottomTabs.Screen
         name='MainScreen'
         component={MainScreen}
         initialParams={{ username: props.username }}
         options={{
           tabBarIcon: () => (
-            <Icon name='home' type='font-awesome' color='#00aced' />
+            <Icon name='home' type='font-awesome' color='#28527a' />
           ),
           tabBarLabel: 'Home'
         }}
@@ -89,7 +89,7 @@ const SenatorScreens = (props) => {
         initialParams={{ username: props.username }}
         options={{
           tabBarIcon: () => (
-            <Icon name='history' type='font-awesome' color='#00aced' />
+            <Icon name='history' type='font-awesome' color='#28527a' />
           ),
           tabBarLabel: 'History'
         }}

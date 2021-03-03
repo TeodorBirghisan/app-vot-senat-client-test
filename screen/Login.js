@@ -10,7 +10,6 @@ import {
   Alert,
   BackHandler
 } from 'react-native';
-
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input } from 'react-native-elements';
 import { CheckBox } from 'react-native-elements';
@@ -154,20 +153,6 @@ const LoginInput = (props) => {
           <View style={styles.checkbox}>
             <CheckBox
               center
-              title='Super Admin Account'
-              checkedIcon='dot-circle-o'
-              uncheckedIcon='circle-o'
-              onPress={() => {
-                setIsSuperAdmin(true);
-                setIsSenator(false);
-                setIsAdmin(false);
-              }}
-              checked={isSuperAdmin}
-            />
-          </View>
-          <View style={styles.checkbox}>
-            <CheckBox
-              center
               title='Admin Account'
               checkedIcon='dot-circle-o'
               uncheckedIcon='circle-o'
@@ -207,6 +192,25 @@ const LoginInput = (props) => {
     </TouchableWithoutFeedback>
   );
 };
+
+/////Daca pun superadmin
+/*
+<View style={styles.checkbox}>
+            <CheckBox
+              center
+              title='Super Admin Account'
+              checkedIcon='dot-circle-o'
+              uncheckedIcon='circle-o'
+              onPress={() => {
+                setIsSuperAdmin(true);
+                setIsSenator(false);
+                setIsAdmin(false);
+              }}
+              checked={isSuperAdmin}
+            />
+          </View>
+
+*/
 
 const styles = StyleSheet.create({
   touchable: {},
