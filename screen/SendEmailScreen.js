@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Button, Alert } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Button,
+  Alert,
+  TouchableOpacity,
+  Text
+} from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import email from 'react-native-email';
 import * as Linking from 'expo-linking';
@@ -97,11 +104,14 @@ const SendEmailScreen = (props) => {
             checked={isSenator}
           />
           <View style={styles.buttonContainer}>
-            <Button
-              title='Send Email'
+            <TouchableOpacity
+              onPress={() => {
+                verifyAccount();
+              }}
               style={styles.button}
-              onPress={() => verifyAccount()}
-            />
+            >
+              <Text style={styles.text}>Send Email</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -112,8 +122,18 @@ const SendEmailScreen = (props) => {
 const styles = StyleSheet.create({
   inputField: { fontWeight: 'bold' },
   container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  buttonContainer: { padding: '10%' },
-  button: {}
+  buttonContainer: { paddingTop: '15%' },
+  button: {
+    width: '60%',
+    alignSelf: 'center',
+    backgroundColor: 'red',
+    elevation: 8,
+    backgroundColor: '#3F72AF',
+    borderRadius: 7,
+    paddingVertical: 5,
+    paddingHorizontal: 7
+  },
+  text: { fontSize: 18, color: '#fff', fontWeight: 'bold', alignSelf: 'center' }
 });
 
 export default SendEmailScreen;
