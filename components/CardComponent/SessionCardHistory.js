@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { joinMeetingAsUSer, deleteAMeeting } from '../../endpoints/Endpoints';
@@ -21,23 +21,29 @@ const SessionCardHistory = (props) => {
       <Card.Title>{props.title}</Card.Title>
       <Card.Divider />
       <Text style={{ marginBottom: 10 }}>{props.programmed_for}</Text>
-      <Button
-        style={styles.buttonStyle}
-        title='Detalii'
+      <TouchableOpacity
         onPress={() => {
           onDetailsPress();
         }}
-      />
+        style={styles.buttonStyle}
+      >
+        <Text style={styles.text}>Details</Text>
+      </TouchableOpacity>
     </Card>
   );
 };
 
 const styles = StyleSheet.create({
   buttonStyle: {
-    borderRadius: 0,
-    marginLeft: 0,
-    marginRight: 0,
-    marginBottom: 0
+    width: '50%',
+    alignItems: 'center',
+    backgroundColor: 'red',
+    elevation: 8,
+    borderRadius: 7,
+    paddingVertical: 5,
+    paddingHorizontal: 7,
+    backgroundColor: '#8ac4d0',
+    alignSelf: 'center'
   }
 });
 

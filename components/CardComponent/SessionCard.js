@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { joinMeetingAsUSer, deleteAMeeting } from '../../endpoints/Endpoints';
@@ -73,35 +73,55 @@ const SessionCard = (props) => {
   };
 
   return (
-    <Card style={styles.cardContainer}>
+    <Card wrapperStyle={styles.cardContainer}>
       <Icon
         raised
         name='trash'
         type='font-awesome'
-        color='#f50'
+        color='#DA723C'
         onPress={() => onDeletePressed()}
       />
-      <Card.Title>{props.title}</Card.Title>
-      <Card.Divider />
-      <Text style={{ marginBottom: 10 }}>{props.programmed_for}</Text>
-      <Button
-        style={styles.buttonStyle}
-        title='JOIN'
+      <Card.Title style={styles.title}>{props.title}</Card.Title>
+      <View style={styles.content}>
+        <Text style={styles.text}>{props.programmed_for}</Text>
+        <Card.Divider style={{ top: 10, backgroundColor: '#fb743e' }} />
+      </View>
+      <TouchableOpacity
         onPress={() => {
           onJoinPressed();
         }}
-      />
+        style={styles.buttonStyle}
+      >
+        <Text style={styles.text}>Join</Text>
+      </TouchableOpacity>
     </Card>
   );
 };
 
 const styles = StyleSheet.create({
   buttonStyle: {
-    borderRadius: 0,
-    marginLeft: 0,
-    marginRight: 0,
-    marginBottom: 0
-  }
+    width: '50%',
+    alignItems: 'center',
+    backgroundColor: 'red',
+    elevation: 8,
+    borderRadius: 7,
+    paddingVertical: 5,
+    paddingHorizontal: 7,
+    backgroundColor: '#8ac4d0',
+    alignSelf: 'center'
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignSelf: 'center',
+    bottom: 25
+  },
+  cardContainer: {
+    height: 200
+  },
+  text: { fontSize: 17 },
+  title: { bottom: '25%', fontSize: 20 }
 });
 
 export default SessionCard;
