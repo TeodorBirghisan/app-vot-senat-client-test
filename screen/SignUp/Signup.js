@@ -4,7 +4,9 @@ import {
   StyleSheet,
   Keyboard,
   TouchableWithoutFeedback,
+  TouchableOpacity,
   Button,
+  Text,
   Alert
 } from 'react-native';
 
@@ -109,38 +111,53 @@ const Signup = (props) => {
       }}
     >
       <View style={styles.signupContainer}>
-        <InputField
-          placeholder='email@address.com'
-          value={emailAddress}
-          onChangeText={setEmailAddress}
-          leftIcon={
-            <Icon type='font-awesome' name='envelope' size={24} color='black' />
-          }
-        />
-        <PasswordField
-          placeholder='password'
-          value={password}
-          onChangeText={setPassword}
-        />
-        <PasswordField
-          placeholder='confirm password'
-          value={confirmPass}
-          onChangeText={setConfirmPass}
-        />
-        <InputField
-          placeholder='username'
-          value={username}
-          onChangeText={setUsername}
-          leftIcon={
-            <Icon type='font-awesome' name='user' size={24} color='black' />
-          }
-        />
-        <Button
-          title={`Signup as ${role}`}
+        <View style={styles.input}>
+          <InputField
+            placeholder='email@address.com'
+            value={emailAddress}
+            onChangeText={setEmailAddress}
+            leftIcon={
+              <Icon
+                type='font-awesome'
+                name='envelope'
+                size={24}
+                color='black'
+              />
+            }
+          />
+        </View>
+        <View style={styles.input}>
+          <PasswordField
+            placeholder='password'
+            value={password}
+            onChangeText={setPassword}
+          />
+        </View>
+        <View style={styles.input}>
+          <PasswordField
+            placeholder='confirm password'
+            value={confirmPass}
+            onChangeText={setConfirmPass}
+          />
+        </View>
+        <View style={styles.input}>
+          <InputField
+            placeholder='username'
+            value={username}
+            onChangeText={setUsername}
+            leftIcon={
+              <Icon type='font-awesome' name='user' size={24} color='black' />
+            }
+          />
+        </View>
+        <TouchableOpacity
           onPress={() => {
             verifyAccount();
           }}
-        />
+          style={styles.buttonContainer}
+        >
+          <Text style={styles.text}>{`Signup as ${role}`}</Text>
+        </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -149,10 +166,25 @@ const Signup = (props) => {
 const styles = StyleSheet.create({
   signupContainer: {
     flex: 1,
-    //width: '75%',
-    alignContent: 'center',
     justifyContent: 'center'
-  }
+  },
+  buttonContainer: {
+    width: '45%',
+    alignSelf: 'center',
+    backgroundColor: 'red',
+    elevation: 8,
+    backgroundColor: '#009688',
+    borderRadius: 7,
+    paddingVertical: 5,
+    paddingHorizontal: 7,
+    top: 25
+  },
+  input: {
+    maxWidth: '80%',
+    padding: 12,
+    left: 40
+  },
+  text: { fontSize: 18, color: '#fff', fontWeight: 'bold', alignSelf: 'center' }
 });
 
 export default Signup;

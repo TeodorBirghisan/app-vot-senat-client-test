@@ -83,9 +83,8 @@ const SessionCard = (props) => {
       />
       <Card.Title style={styles.title}>{props.title}</Card.Title>
       <View style={styles.content}>
-        <Card.Divider style={{ backgroundColor: 'blue' }} />
         <Text style={styles.text}>{props.programmed_for}</Text>
-        <Card.Divider style={{ top: 10, backgroundColor: 'blue' }} />
+        <Card.Divider style={{ top: 10, backgroundColor: '#fb743e' }} />
       </View>
       <TouchableOpacity
         onPress={() => {
