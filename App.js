@@ -31,6 +31,7 @@ import SessionHistoryDrawer from './components/Drawer/SessionHistoryDrawer';
 import DetailedHistory from './screen/DetailedHistory';
 import * as SecureStore from 'expo-secure-store';
 import * as Linking from 'expo-linking';
+import { LogBox } from 'react-native';
 
 const Stack = createStackNavigator();
 
@@ -61,7 +62,7 @@ function urlRedirect(url) {
   });*/
 
 export default function App() {
-  console.disableYellowBox = true;
+  LogBox.ignoreAllLogs(true);
   const [fromExternalPath, setFromExternalPath] = useState(false);
   const [userRole, setUserRole] = useState('');
   useEffect(() => {

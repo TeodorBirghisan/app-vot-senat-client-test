@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
 
-import { Card, ButtonGroup, Divider } from 'react-native-elements';
+import { Card, Divider } from 'react-native-elements';
 import {
   getAllVoteValues,
   voteAsUserAtMeetingForTopic,
@@ -75,67 +75,83 @@ const VotingCard = (props) => {
 
   return (
     <Card>
-      <Card.Title>{`Rezultatul actual:     ${
+      <Card.Title style={styles.title}>{`Rezultatul actual:     ${
         result || props.topicResult
       }`}</Card.Title>
       <Card.Divider />
-      <Text>{props.topicContent}</Text>
+      <Text style={styles.topic}>{props.topicContent}</Text>
       <View style={styles.buttonContainer}>
-        <View style={styles.button}>
-          <Button
-            title={'DA'}
-            onPress={() => {
-              onVotePressHandler(
-                props.username,
-                props.sessionID,
-                props.topicID,
-                'DA',
-                props.topicContent
-              );
-            }}
-          />
-        </View>
-        <View style={styles.button}>
-          <Button
-            title={'MA ABTIN'}
-            onPress={() => {
-              onVotePressHandler(
-                props.username,
-                props.sessionID,
-                props.topicID,
-                'MA ABTIN',
-                props.topicContent
-              );
-            }}
-          />
-        </View>
-        <View style={styles.button}>
-          <Button
-            title={'NU'}
-            onPress={() => {
-              onVotePressHandler(
-                props.username,
-                props.sessionID,
-                props.topicID,
-                'NU',
-                props.topicContent
-              );
-            }}
-          />
-        </View>
+        <TouchableOpacity
+          onPress={() => {
+            onVotePressHandler(
+              props.username,
+              props.sessionID,
+              props.topicID,
+              'DA',
+              props.topicContent
+            );
+          }}
+          style={[styles.button, { backgroundColor: '#11999E' }]}
+        >
+          <Text style={styles.text}>Da</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            onVotePressHandler(
+              props.username,
+              props.sessionID,
+              props.topicID,
+              'MA ABTIN',
+              props.topicContent
+            );
+          }}
+          style={[styles.button, { backgroundColor: '#364F6B' }]}
+        >
+          <Text style={styles.text}>Ma abtin</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            onVotePressHandler(
+              props.username,
+              props.sessionID,
+              props.topicID,
+              'NU',
+              props.topicContent
+            );
+          }}
+          style={[styles.button, { backgroundColor: '#88304e' }]}
+        >
+          <Text style={styles.text}>Nu</Text>
+        </TouchableOpacity>
       </View>
     </Card>
   );
 };
 
 const styles = StyleSheet.create({
-  button: { width: 100 },
+  button: {
+    width: '25%',
+    alignItems: 'center',
+    backgroundColor: 'red',
+    elevation: 8,
+    borderRadius: 7,
+    paddingVertical: 5,
+    paddingHorizontal: 7
+  },
   buttonContainer: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingTop: 20
-  }
+  },
+  text: {
+    fontSize: 15,
+    color: '#fff',
+    fontWeight: 'bold',
+    alignSelf: 'center'
+  },
+  topic: { fontSize: 16 },
+  title: { fontSize: 19 }
 });
 
 export default VotingCard;
